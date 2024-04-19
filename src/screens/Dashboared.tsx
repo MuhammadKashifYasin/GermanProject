@@ -16,6 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
+import { HomeHeader } from '../components/homeHeader';
 
 const Dashboared = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -233,6 +234,9 @@ const Dashboared = ({navigation}) => {
     navigation.navigate(screenName, {component: componentName});
   };
   return (
+    <>
+    <HomeHeader />
+  
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
         <View style={styles.container}>
@@ -356,6 +360,7 @@ const Dashboared = ({navigation}) => {
         </View>
       </Modal>
     </View>
+    </>
   );
 };
 
