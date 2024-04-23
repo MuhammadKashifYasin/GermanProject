@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,143 +8,145 @@ import {
   StyleSheet,
   Modal,
   Alert,
-} from 'react-native';
-import {Header} from './header';
-import {Bar} from 'react-native-progress';
+} from "react-native";
+import { Header } from "./header";
+import { Bar } from "react-native-progress";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import Tts from 'react-native-tts';
+} from "react-native-responsive-screen";
+import Tts from "react-native-tts";
 import {
   setCompletedVocabulary,
   setCompletedListening,
   setCompletedReading,
   setCompletedMemory,
   setCompletedWriting,
-} from '../redux/reducers/userReducer';
-import {useDispatch, useSelector} from 'react-redux';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+} from "../redux/reducers/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import Feather from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { useNavigation } from "@react-navigation/native";
 
-export const Vocabulary = ({navigation, alphabet}) => {
+export const Vocabulary = ({ goBack, backgroundColor }) => {
   const [itemsPressed, setItemsPressed] = useState(0);
   const [pressedIndices, setPressedIndices] = useState([]);
   const [modal, setModal] = useState(false);
   const [allLettersCompleted, setAllLettersCompleted] = useState(false);
   const data = [
     {
-      name: require('../assets/AtoZImages/A.jpeg'),
-      title: 'A',
+      name: require("../assets/AtoZImages/A.jpeg"),
+      title: "A",
     },
     {
-      name: require('../assets/AtoZImages/B.jpeg'),
-      title: 'B',
+      name: require("../assets/AtoZImages/B.jpeg"),
+      title: "B",
     },
     {
-      name: require('../assets/AtoZImages/C.jpeg'),
-      title: 'C',
+      name: require("../assets/AtoZImages/C.jpeg"),
+      title: "C",
     },
     {
-      name: require('../assets/AtoZImages/d.jpeg'),
-      title: 'D',
+      name: require("../assets/AtoZImages/d.jpeg"),
+      title: "D",
     },
     {
-      name: require('../assets/AtoZImages/e.jpeg'),
-      title: 'E',
+      name: require("../assets/AtoZImages/e.jpeg"),
+      title: "E",
     },
     {
-      name: require('../assets/AtoZImages/f.png'),
-      title: 'F',
+      name: require("../assets/AtoZImages/f.png"),
+      title: "F",
     },
     {
-      name: require('../assets/AtoZImages/g.png'),
-      title: 'G',
+      name: require("../assets/AtoZImages/g.png"),
+      title: "G",
     },
     {
-      name: require('../assets/AtoZImages/h.jpeg'),
-      title: 'H',
+      name: require("../assets/AtoZImages/h.jpeg"),
+      title: "H",
     },
     {
-      name: require('../assets/AtoZImages/i.jpeg'),
-      title: 'I',
+      name: require("../assets/AtoZImages/i.jpeg"),
+      title: "I",
     },
     {
-      name: require('../assets/AtoZImages/j.jpeg'),
-      title: 'J',
+      name: require("../assets/AtoZImages/j.jpeg"),
+      title: "J",
     },
     {
-      name: require('../assets/AtoZImages/k.jpeg'),
-      title: 'K',
+      name: require("../assets/AtoZImages/k.jpeg"),
+      title: "K",
     },
     {
-      name: require('../assets/AtoZImages/l.jpeg'),
-      title: 'L',
+      name: require("../assets/AtoZImages/l.jpeg"),
+      title: "L",
     },
     {
-      name: require('../assets/AtoZImages/m.png'),
-      title: 'M',
+      name: require("../assets/AtoZImages/m.png"),
+      title: "M",
     },
     {
-      name: require('../assets/AtoZImages/n.png'),
-      title: 'N',
+      name: require("../assets/AtoZImages/n.png"),
+      title: "N",
     },
     {
-      name: require('../assets/AtoZImages/o.png'),
-      title: 'O',
+      name: require("../assets/AtoZImages/o.png"),
+      title: "O",
     },
     {
-      name: require('../assets/AtoZImages/p.png'),
-      title: 'P',
+      name: require("../assets/AtoZImages/p.png"),
+      title: "P",
     },
     {
-      name: require('../assets/AtoZImages/q.png'),
-      title: 'Q',
+      name: require("../assets/AtoZImages/q.png"),
+      title: "Q",
     },
     {
-      name: require('../assets/AtoZImages/r.png'),
-      title: 'R',
+      name: require("../assets/AtoZImages/r.png"),
+      title: "R",
     },
     {
-      name: require('../assets/AtoZImages/s.jpeg'),
-      title: 'S',
+      name: require("../assets/AtoZImages/s.jpeg"),
+      title: "S",
     },
     {
-      name: require('../assets/AtoZImages/t.png'),
-      title: 'T',
+      name: require("../assets/AtoZImages/t.png"),
+      title: "T",
     },
     {
-      name: require('../assets/AtoZImages/u.jpeg'),
-      title: 'U',
+      name: require("../assets/AtoZImages/u.jpeg"),
+      title: "U",
     },
     {
-      name: require('../assets/AtoZImages/v.png'),
-      title: 'V',
+      name: require("../assets/AtoZImages/v.png"),
+      title: "V",
     },
     {
-      name: require('../assets/AtoZImages/w.png'),
-      title: 'W',
+      name: require("../assets/AtoZImages/w.png"),
+      title: "W",
     },
     {
-      name: require('../assets/AtoZImages/x.jpeg'),
-      title: 'X',
+      name: require("../assets/AtoZImages/x.jpeg"),
+      title: "X",
     },
     {
-      name: require('../assets/AtoZImages/y.jpeg'),
-      title: 'Y',
+      name: require("../assets/AtoZImages/y.jpeg"),
+      title: "Y",
     },
     {
-      name: require('../assets/AtoZImages/z.jpeg'),
-      title: 'Z',
+      name: require("../assets/AtoZImages/z.jpeg"),
+      title: "Z",
     },
   ];
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   useEffect(() => {
-    Tts.setDefaultLanguage('en-US'); // Set default language for text-to-speech
+    Tts.setDefaultLanguage("en-US"); // Set default language for text-to-speech
     Tts.setDefaultRate(0.5); // Set default speaking rate
     const timeout = setTimeout(() => {
-      speakWord('Alphabet');
+      speakWord("Alphabet");
     }, 2000);
 
     // Clear the timeout to avoid memory leaks
@@ -152,14 +154,14 @@ export const Vocabulary = ({navigation, alphabet}) => {
   }, []);
 
   const completedVocabularies = useSelector(
-    state => state.root.user.completedVocabularies,
+    (state) => state.root.user.completedVocabularies
   );
 
-  console.log('completedVocabularies', completedVocabularies);
+  console.log("completedVocabularies", completedVocabularies);
 
-  const handleItemPress = index => {
+  const handleItemPress = (index) => {
     if (!pressedIndices.includes(index)) {
-      setItemsPressed(prevItemsPressed => prevItemsPressed + 1);
+      setItemsPressed((prevItemsPressed) => prevItemsPressed + 1);
       setPressedIndices([...pressedIndices, index]);
       speakWord(data[index].title);
     } else {
@@ -168,13 +170,13 @@ export const Vocabulary = ({navigation, alphabet}) => {
     }
   };
 
-  const isPressed = index => pressedIndices.includes(index);
+  const isPressed = (index) => pressedIndices.includes(index);
 
   const progress = itemsPressed / data.length;
 
-  const speakWord = word => {
+  const speakWord = (word) => {
     Tts.stop();
-    Tts.speak(word, {language: 'de-DE'});
+    Tts.speak(word, { language: "de-DE" });
   };
 
   useEffect(() => {
@@ -184,17 +186,30 @@ export const Vocabulary = ({navigation, alphabet}) => {
     }
   }, [itemsPressed]);
   const item = itemsPressed;
-  const screenName = 'alphabet';
-  const handleDispatch = () => {
-    dispatch(setCompletedVocabulary({item, screenName}));
-    setModal(false);
-  };
-  console.log('alphabet', itemsPressed);
+  const screenName = "alphabet";
 
+  useEffect(() => {
+    if (itemsPressed === 26) {
+      dispatch(setCompletedVocabulary({ item, screenName }));
+    }
+  }, [itemsPressed]);
+
+  useEffect(() => {
+    if (itemsPressed === 26) {
+      setTimeout(() => {
+        navigation.navigate("dashboared");
+      }, 2000);
+    }
+  }, [itemsPressed]);
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
+      <Header
+        navigation={goBack}
+        title={"ALPHABET"}
+        backgroundColor={backgroundColor}
+      />
       {completedVocabularies?.item === 26 &&
-      completedVocabularies?.screenName === 'alphabet' ? (
+      completedVocabularies?.screenName === "alphabet" ? (
         <View>
           <View style={styles.length}>
             <Text style={styles.text}>26/26</Text>
@@ -202,12 +217,12 @@ export const Vocabulary = ({navigation, alphabet}) => {
               progress={1}
               width={wp(75)}
               height={hp(5)}
-              color="blue"
-              unfilledColor="#fff"
+              color="#6495ED"
+              unfilledColor="#caf0f8"
               borderWidth={2}
               borderColor="black"
               borderRadius={10}
-              style={{marginVertical: 10}}
+              style={{ marginVertical: 10 }}
             />
           </View>
           <ScrollView>
@@ -217,10 +232,11 @@ export const Vocabulary = ({navigation, alphabet}) => {
                   key={index}
                   style={[
                     styles.container,
-                    {borderColor: 'blue'}, // Set border color to blue for completed letters
-                  ]}>
-                  <Image source={item.name} style={{width: 50, height: 50}} />
-                  <Text style={{fontSize: 20}}>{item.title}</Text>
+                    { borderColor: "#6495ED" }, // Set border color to blue for completed letters
+                  ]}
+                >
+                  <Image source={item.name} style={{ width: 50, height: 50 }} />
+                  <Text style={{ fontSize: 20 }}>{item.title}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -234,12 +250,10 @@ export const Vocabulary = ({navigation, alphabet}) => {
               progress={progress}
               width={wp(75)}
               height={hp(5)}
-              color="blue"
-              unfilledColor="#fff"
-              borderWidth={2}
-              borderColor="black"
-              borderRadius={10}
-              style={{marginVertical: 10}}
+              color="#6495ED"
+              unfilledColor="#D2eafb"
+              borderRadius={15}
+              style={{ marginVertical: 10 }}
             />
           </View>
           <ScrollView>
@@ -250,30 +264,17 @@ export const Vocabulary = ({navigation, alphabet}) => {
                   key={index}
                   style={[
                     styles.container,
-                    isPressed(index) && {borderColor: 'blue'},
-                  ]}>
-                  <Image source={item.name} style={{width: 50, height: 50}} />
-                  <Text style={{fontSize: 20}}>{item.title}</Text>
+                    isPressed(index) && { borderColor: "#6495ED" },
+                  ]}
+                >
+                  <Image source={item.name} style={{ width: 50, height: 50 }} />
+                  <Text style={{ fontSize: 20, padding: 10 }}>
+                    {item.title}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
           </ScrollView>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modal}
-            onRequestClose={() => setModal(false)}>
-            <View style={styles.modal}>
-              <View style={styles.modalView}>
-                <Text style={{fontSize: 20, margin: 20}}>ccomplete</Text>
-                <TouchableOpacity
-                  onPress={handleDispatch}
-                  style={styles.okView}>
-                  <Text style={styles.okText}>OK</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </View>
       )}
     </View>
@@ -282,7 +283,171 @@ export const Vocabulary = ({navigation, alphabet}) => {
 
 //   Listning component
 
-export const Listening = ({navigation}) => {
+export const Listening = ({ goBack, backgroundColor }) => {
+  const [progress, setProgress] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [spokenWord, setSpokenWord] = useState(null);
+  const [shuffledImages, setShuffledImages] = useState([]);
+
+  const imagesWithTitles = [
+    { image: require("../assets/AtoZImages/A.jpeg"), title: "A" },
+    { image: require("../assets/AtoZImages/B.jpeg"), title: "B" },
+    { image: require("../assets/AtoZImages/C.jpeg"), title: "C" },
+    { image: require("../assets/AtoZImages/d.jpeg"), title: "D" },
+    { image: require("../assets/AtoZImages/e.jpeg"), title: "E" },
+    { image: require("../assets/AtoZImages/f.png"), title: "F" },
+    { image: require("../assets/AtoZImages/g.png"), title: "G" },
+    { image: require("../assets/AtoZImages/h.jpeg"), title: "H" },
+    { image: require("../assets/AtoZImages/i.jpeg"), title: "I" },
+    { image: require("../assets/AtoZImages/j.jpeg"), title: "J" },
+    { image: require("../assets/AtoZImages/k.jpeg"), title: "K" },
+    { image: require("../assets/AtoZImages/l.jpeg"), title: "L" },
+    { image: require("../assets/AtoZImages/m.png"), title: "M" },
+    { image: require("../assets/AtoZImages/n.png"), title: "N" },
+    { image: require("../assets/AtoZImages/o.png"), title: "O" },
+    { image: require("../assets/AtoZImages/p.png"), title: "P" },
+    { image: require("../assets/AtoZImages/q.png"), title: "Q" },
+    { image: require("../assets/AtoZImages/r.png"), title: "R" },
+    { image: require("../assets/AtoZImages/s.jpeg"), title: "S" },
+    { image: require("../assets/AtoZImages/t.png"), title: "T" },
+    { image: require("../assets/AtoZImages/u.jpeg"), title: "U" },
+    { image: require("../assets/AtoZImages/v.png"), title: "V" },
+    { image: require("../assets/AtoZImages/w.png"), title: "W" },
+    { image: require("../assets/AtoZImages/x.jpeg"), title: "X" },
+    { image: require("../assets/AtoZImages/y.jpeg"), title: "Y" },
+    { image: require("../assets/AtoZImages/z.jpeg"), title: "Z" },
+  ];
+
+  useEffect(() => {
+    getSelectedArray();
+  }, [currentQuestion]);
+
+  const getSelectedArray = async () => {
+    let shuffledArray = await shuffleArray([...imagesWithTitles]);
+    const randomValues = shuffledArray.slice(0, 4);
+    setShuffledImages([...randomValues]);
+    speakWord(randomValues);
+  };
+
+  // const getSelectedArray = async () => {
+  //   let shuffledArray = await shuffleArray([...options]);
+  //   console.log("shuffledArray", shuffledArray);
+  //   const randomValues = shuffledArray.slice(0, 4);
+  //   console.log("randomValues", randomValues);
+  //   setShuffledOptions([...randomValues]);
+  //   // setTimeout(() => {
+  //   speakWord(randomValues);
+  //   // }, 5000);
+  // };
+
+  const speakWord = (randomImages) => {
+    // const word = shuffledOptions[currentQuestion];
+    const randomIndex = Math.floor(Math.random() * randomImages.length);
+    // setSpokenWord(randomImages[randomIndex]);
+    const randomWord = randomImages[randomIndex].title;
+    setSpokenWord(randomWord);
+    Tts.speak(randomWord);
+  };
+
+  const handleOptionSelect = (selectedItem) => {
+    if (selectedItem) {
+      if (selectedItem.title === spokenWord) {
+        console.log("Correct word selected:", spokenWord);
+        setProgress(progress + 1);
+        if (progress <= 9) {
+          setTimeout(() => {
+            getSelectedArray();
+          }, 1500);
+        }
+        setSelectedOption(selectedItem); // Highlight selected option
+        return; // Exit function early
+      } else {
+        // Wrong word selected
+        setSelectedOption(selectedItem); // Highlight selected option with red border
+        setTimeout(() => {
+          setSelectedOption(null); // Clear selected option after 2 seconds
+        }, 2000);
+      }
+    }
+  };
+
+  const handleVolumeIconPress = () => {
+    Tts.setDefaultLanguage("en-US"); // Set default language for text-to-speech
+    Tts.setDefaultRate(0.5);
+    speakWord(shuffledImages);
+  };
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const item2 = progress;
+  const screenName = "alphabet";
+  useEffect(() => {
+    if (progress > 9) {
+      dispatch(setCompletedListening({ item2, screenName }));
+      setTimeout(() => {
+        navigation.navigate("dashboared");
+      });
+    }
+  }, [progress]);
+
+  return (
+    <View>
+      <Header
+        navigation={goBack}
+        title={"ALPHABET"}
+        backgroundColor={backgroundColor}
+      />
+
+      <View style={styles.lengthProgress}>
+        <Text style={styles.textProgress}>{progress}/10</Text>
+        <Bar
+          progress={progress / 10}
+          width={wp(75)} // Example width using wp for responsive width
+          height={hp(5)} // Example height using hp for responsive height
+          color="#4caf50" // Example color
+          unfilledColor="#D8f1dc"
+          borderRadius={15}
+          style={{ marginVertical: 15 }}
+        />
+      </View>
+      <TouchableOpacity
+        style={styles.volumeIcon}
+        onPress={handleVolumeIconPress}
+      >
+        <Feather name="volume-2" color={"#fff"} size={50} />
+      </TouchableOpacity>
+      <View style={styles.mcqs}>
+        {shuffledImages?.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.option,
+              selectedOption === item && {
+                borderColor: item.title === spokenWord ? "green" : "red",
+              },
+            ]}
+            onPress={() => handleOptionSelect(item)}
+            disabled={!spokenWord}
+          >
+            <Image source={item.image} style={styles.optionsImage} />
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+//  reading component
+
+export const Reading = ({ goBack, backgroundColor }) => {
   const [progress, setProgress] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -291,52 +456,546 @@ export const Listening = ({navigation}) => {
   const [shuffledOptions, setShuffledOptions] = useState([]);
 
   const options = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
+    { image: require("../assets/AtoZImages/A.jpeg"), title: "A" },
+    { image: require("../assets/AtoZImages/B.jpeg"), title: "B" },
+    { image: require("../assets/AtoZImages/C.jpeg"), title: "C" },
+    { image: require("../assets/AtoZImages/d.jpeg"), title: "D" },
+    { image: require("../assets/AtoZImages/e.jpeg"), title: "E" },
+    { image: require("../assets/AtoZImages/f.png"), title: "F" },
+    { image: require("../assets/AtoZImages/g.png"), title: "G" },
+    { image: require("../assets/AtoZImages/h.jpeg"), title: "H" },
+    { image: require("../assets/AtoZImages/i.jpeg"), title: "I" },
+    { image: require("../assets/AtoZImages/j.jpeg"), title: "J" },
+    { image: require("../assets/AtoZImages/k.jpeg"), title: "K" },
+    { image: require("../assets/AtoZImages/l.jpeg"), title: "L" },
+    { image: require("../assets/AtoZImages/m.png"), title: "M" },
+    { image: require("../assets/AtoZImages/n.png"), title: "N" },
+    { image: require("../assets/AtoZImages/o.png"), title: "O" },
+    { image: require("../assets/AtoZImages/p.png"), title: "P" },
+    { image: require("../assets/AtoZImages/q.png"), title: "Q" },
+    { image: require("../assets/AtoZImages/r.png"), title: "R" },
+    { image: require("../assets/AtoZImages/s.jpeg"), title: "S" },
+    { image: require("../assets/AtoZImages/t.png"), title: "T" },
+    { image: require("../assets/AtoZImages/u.jpeg"), title: "U" },
+    { image: require("../assets/AtoZImages/v.png"), title: "V" },
+    { image: require("../assets/AtoZImages/w.png"), title: "W" },
+    { image: require("../assets/AtoZImages/x.jpeg"), title: "X" },
+    { image: require("../assets/AtoZImages/y.jpeg"), title: "Y" },
+    { image: require("../assets/AtoZImages/z.jpeg"), title: "Z" },
   ];
 
   useEffect(() => {
-    getSelectedArray();
+    setTimeout(() => {
+      getSelectedArray();
+    }, 1500);
   }, [currentQuestion]);
 
   const getSelectedArray = async () => {
     let shuffledArray = await shuffleArray([...options]);
-    console.log('shuffledArray', shuffledArray);
     const randomValues = shuffledArray.slice(0, 4);
-    console.log('randomValues', randomValues);
+    setShuffledOptions([...randomValues]);
+    const randomIndex = Math.floor(Math.random() * randomValues.length);
+    const randomWord = randomValues[randomIndex].title;
+    setSpokenWord(randomWord);
+  };
+
+  const speakWord = () => {
+    Tts.speak(spokenWord);
+  };
+
+  const handleOptionSelect = (selectedItem) => {
+    if (selectedItem) {
+      if (selectedItem.title === spokenWord) {
+        console.log("Correct word selected:", spokenWord);
+        setProgress(progress + 1);
+        if (progress <= 9) {
+          setTimeout(() => {
+            getSelectedArray();
+          }, 1500);
+        }
+        setSelectedOption(selectedItem);
+        speakWord();
+        // No need to speak here, the word is already spoken initially
+        return;
+      } else {
+        setSelectedOption(selectedItem);
+        setTimeout(() => {
+          setSelectedOption(null);
+        }, 2000);
+      }
+    }
+  };
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const item3 = progress;
+  const screenName = "alphabet";
+  useEffect(() => {
+    if (progress > 9) {
+      dispatch(setCompletedReading({ item3, screenName }));
+      setTimeout(() => {
+        navigation.navigate("dashboared");
+      }, 1500);
+    }
+  });
+  return (
+    <View>
+      <Header
+        navigation={goBack}
+        title={"ALPHABET"}
+        backgroundColor={backgroundColor}
+      />
+
+      <View style={styles.lengthProgress}>
+        <Text style={styles.textProgressPink}>{progress}/10</Text>
+        <Bar
+          progress={progress / 10}
+          width={wp(75)} // Example width using wp for responsive width
+          height={hp(5)} // Example height using hp for responsive height
+          color="#fb59d9" // Example color
+          unfilledColor="#ffcff5"
+          borderRadius={15}
+          style={{ marginVertical: 15 }}
+        />
+      </View>
+      {/* <TouchableOpacity
+        style={styles.volumeIcon}
+        // onPress={handleVolumeIconPress}
+      > */}
+      <View style={styles.volumeIcon}>
+        <Text style={styles.spokenWordText}>{spokenWord}</Text>
+      </View>
+      {/* </TouchableOpacity> */}
+      <View style={styles.mcqs}>
+        {shuffledOptions?.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.option,
+              selectedOption === item && {
+                borderColor: item.title === spokenWord ? "green" : "red",
+              },
+            ]}
+            onPress={() => handleOptionSelect(item)}
+            disabled={!spokenWord}
+          >
+            <Image source={item.image} style={styles.optionsImage} />
+          </TouchableOpacity>
+        ))}
+      </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View style={styles.modal}>
+          <View style={styles.modalView}>
+            <View style={{}}>
+              <AntDesign name="checkcircle" color={"#046928"} size={50} />
+              <View style={styles.okView}>
+                <Text style={styles.okText}>OK</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+};
+
+export const Memory = ({ goBack, backgroundColor }) => {
+  const [upperState, setUpperState] = useState([]);
+  const [lowerState, setLowerState] = useState([]);
+  const [wordArray, setWordArray] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const [selectedLowerWord, setSelectedLowerWord] = useState("");
+  const [selectedUpperWord, setSelectedUpperWord] = useState("");
+  const [selectedWordArray, setSelectedWordArray] = useState([]);
+  const [shuffledOnce, setShuffledOnce] = useState(false);
+
+  const options = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
+
+  const ImageArr = [
+    {
+      title: "A",
+      image: require("../assets/AtoZImages/A.jpeg"),
+    },
+    {
+      title: "B",
+      image: require("../assets/AtoZImages/B.jpeg"),
+    },
+    {
+      title: "C",
+      image: require("../assets/AtoZImages/C.jpeg"),
+    },
+    {
+      title: "D",
+      image: require("../assets/AtoZImages/d.jpeg"),
+    },
+    {
+      title: "E",
+      image: require("../assets/AtoZImages/e.jpeg"),
+    },
+    {
+      title: "F",
+      image: require("../assets/AtoZImages/f.png"),
+    },
+    {
+      title: "G",
+      image: require("../assets/AtoZImages/g.png"),
+    },
+    {
+      title: "H",
+      image: require("../assets/AtoZImages/h.jpeg"),
+    },
+    {
+      title: "I",
+      image: require("../assets/AtoZImages/i.jpeg"),
+    },
+    {
+      title: "J",
+      image: require("../assets/AtoZImages/j.jpeg"),
+    },
+    {
+      title: "K",
+      image: require("../assets/AtoZImages/k.jpeg"),
+    },
+    {
+      title: "L",
+      image: require("../assets/AtoZImages/l.jpeg"),
+    },
+    {
+      title: "M",
+      image: require("../assets/AtoZImages/m.png"),
+    },
+    {
+      title: "N",
+      image: require("../assets/AtoZImages/n.png"),
+    },
+    {
+      title: "O",
+      image: require("../assets/AtoZImages/o.png"),
+    },
+    {
+      title: "P",
+      image: require("../assets/AtoZImages/p.png"),
+    },
+    {
+      title: "Q",
+      image: require("../assets/AtoZImages/q.png"),
+    },
+    {
+      title: "R",
+      image: require("../assets/AtoZImages/r.png"),
+    },
+    {
+      title: "S",
+      image: require("../assets/AtoZImages/s.jpeg"),
+    },
+    {
+      title: "T",
+      image: require("../assets/AtoZImages/t.png"),
+    },
+    {
+      title: "U",
+      image: require("../assets/AtoZImages/u.jpeg"),
+    },
+    {
+      title: "V",
+      image: require("../assets/AtoZImages/v.png"),
+    },
+    {
+      title: "W",
+      image: require("../assets/AtoZImages/w.png"),
+    },
+    {
+      title: "X",
+      image: require("../assets/AtoZImages/x.jpeg"),
+    },
+    {
+      title: "Y",
+      image: require("../assets/AtoZImages/y.jpeg"),
+    },
+    {
+      title: "Z",
+      image: require("../assets/AtoZImages/z.jpeg"),
+    },
+  ];
+
+  useEffect(() => {
+    if (!shuffledOnce && progress === 0) {
+      const shuffledArray = shuffleArray([...options]);
+      setUpperState(shuffledArray.slice(0, 6));
+      setLowerState(shuffleArray(shuffledArray.slice(0, 6)));
+      setShuffledOnce(true); // Update the state to indicate useEffect has been triggered
+    } else if (shuffledOnce && progress === 6) {
+      setSelectedWordArray([]);
+      const shuffledArray = shuffleArray([...options]);
+      setUpperState(shuffledArray.slice(0, 6));
+      setLowerState(shuffleArray(shuffledArray.slice(0, 6)));
+    }
+  }, [progress, shuffledOnce]);
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const handleOptionSelect = (value) => {
+    console.log("handleOptionSelect option", value);
+    if (selectedLowerWord == "") {
+      setSelectedUpperWord(value);
+    } else {
+      let isValue = value === selectedLowerWord;
+      console.log("handleUpperOptionSelect", isValue);
+      if (isValue) {
+        let tempArray = [];
+        tempArray.push(selectedLowerWord);
+        setSelectedWordArray((prevArray) => [...prevArray, ...tempArray]);
+        Tts.speak(selectedLowerWord);
+        setProgress(progress + 1);
+      } else {
+        setSelectedLowerWord("");
+      }
+    }
+  };
+
+  console.log("selectedWordArray", selectedWordArray);
+
+  const handleLowerOptionSelect = (option) => {
+    console.log("handleLowerOptionSelect option", option);
+    if (selectedUpperWord == "") {
+      setSelectedLowerWord(option);
+    } else {
+      let isValue = option === selectedUpperWord;
+      console.log("handleLowerOptionSelect", isValue);
+      if (isValue) {
+        let tempArray = [];
+        tempArray.push(selectedUpperWord);
+        setSelectedWordArray((prevArray) => [...prevArray, ...tempArray]);
+        Tts.speak(selectedUpperWord);
+        setProgress(progress + 1);
+      } else {
+        setSelectedUpperWord("");
+      }
+    }
+  };
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const dispatchData = () => {
+    const item4 = progress;
+    const screenName = "alphabet";
+    if (progress === 12) {
+      dispatch(setCompletedMemory({ item4, screenName }));
+    }
+  };
+
+  useEffect(() => {
+    dispatchData();
+  }, [progress]);
+
+  useEffect(() => {
+    if (progress === 12) {
+      navigation.navigate("dashboared"); // Ensure correct spelling
+    }
+  }, [progress, navigation]);
+
+  return (
+    <View>
+      <Header
+        navigation={goBack}
+        title={"ALPHABET"}
+        backgroundColor={backgroundColor}
+      />
+
+      <View style={styles.lengthProgress}>
+        <Text style={styles.textProgress}>{progress}/12</Text>
+        <Bar
+          progress={progress / 10}
+          width={wp(75)} // Example width using wp for responsive width
+          height={hp(5)} // Example height using hp for responsive height
+          color="#BA5624" // Example color
+          unfilledColor="#fff" // Example unfilled color
+          borderWidth={2} // Example border width
+          borderColor="black" // Example border color
+          borderRadius={10}
+          style={{ marginVertical: 10 }}
+        />
+      </View>
+      <View style={styles.mcqs}>
+        {upperState?.map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.optionSelectionView,
+              {
+                backgroundColor:
+                  selectedWordArray.includes(option) ||
+                  selectedUpperWord == option
+                    ? "#fff"
+                    : "orange",
+                borderColor: selectedWordArray.includes(option)
+                  ? "green"
+                  : "#782900",
+                opacity: selectedWordArray.includes(option) ? 0.1 : 1,
+              },
+            ]}
+            onPress={() => {
+              setSelectedUpperWord(option), handleOptionSelect(option);
+            }}
+            disabled={selectedWordArray.includes(option)}
+          >
+            <Text
+              style={[
+                styles.optionSelectionText,
+                { color: selectedUpperWord == option ? "black" : "white" },
+              ]}
+            >
+              {option}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <View style={styles.mcqs}>
+        {lowerState?.map((option, index) => {
+          const filteredImages = ImageArr.filter(
+            (item) => item.title === option
+          );
+          if (filteredImages.length > 0) {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.optionBView,
+                  {
+                    borderColor:
+                      selectedLowerWord === option
+                        ? "orange"
+                        : selectedWordArray.includes(option)
+                        ? "green"
+                        : "gray",
+                    opacity: selectedWordArray.includes(option) ? 0.1 : 1,
+                  },
+                ]}
+                onPress={() => {
+                  handleLowerOptionSelect(option);
+                }}
+                disabled={selectedWordArray.includes(option)}
+              >
+                {/* Assuming you want to display the image */}
+                <Image
+                  source={filteredImages[0].image}
+                  style={styles.optionBImage}
+                />
+              </TouchableOpacity>
+            );
+          } else {
+            return null; // No matching image found for the option
+          }
+        })}
+      </View>
+    </View>
+  );
+};
+
+export const Writing = ({ goBack, backgroundColor }) => {
+  const [progress, setProgress] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [spokenWord, setSpokenWord] = useState(null);
+  const [shuffledOptions, setShuffledOptions] = useState([]);
+  const [selecteWord, setSelectedWord] = useState("");
+
+  const options = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
+
+  useEffect(() => {
+    setTimeout(() => {
+      getSelectedArray();
+    }, 1000);
+  }, [currentQuestion]);
+
+  const getSelectedArray = async () => {
+    let shuffledArray = await shuffleArray([...options]);
+    console.log("shuffledArray", shuffledArray);
+    const randomValues = shuffledArray.slice(0, 10);
+    console.log("randomValues", randomValues);
     setShuffledOptions([...randomValues]);
     // setTimeout(() => {
     speakWord(randomValues);
     // }, 5000);
   };
 
-  const speakWord = randomValues => {
+  const speakWord = (randomValues) => {
     // const word = shuffledOptions[currentQuestion];
-    console.log('shuffledOptions', randomValues);
+    console.log("shuffledOptions", randomValues);
     const randomIndex = Math.floor(Math.random() * randomValues.length);
 
     // Get the word at the random index
@@ -345,26 +1004,40 @@ export const Listening = ({navigation}) => {
     Tts.speak(randomWord);
   };
 
-  const handleOptionSelect = option => {
+  const handleOptionSelect = (option) => {
     setSelectedOption(option);
     if (option === spokenWord) {
       setProgress(progress + 1);
-      if (progress >= 9) {
-        // navigation.goBack();
-        // setShowModal(true);
-      } else {
-        setCurrentQuestion(Math.floor(Math.random() * options.length));
+      setSelectedWord(spokenWord); // Set the selected word
+      if (progress < 10) {
+        setTimeout(() => {
+          setTimeout(() => {
+            setSelectedWord("");
+          }, 2000);
+          getSelectedArray();
+        }, 2000);
       }
+    } else {
+      // Wrong word selected
+      setSelectedOption(option);
+      setTimeout(() => {
+        setSelectedOption(null); // Clear selected option after 1 second
+      }, 1000);
     }
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setSelectedWord("");
+    }, 500);
+  });
 
   const handleVolumeIconPress = () => {
-    Tts.setDefaultLanguage('en-US'); // Set default language for text-to-speech
+    Tts.setDefaultLanguage("en-US"); // Set default language for text-to-speech
     Tts.setDefaultRate(0.5);
     speakWord(shuffledOptions);
   };
 
-  const shuffleArray = array => {
+  const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -372,328 +1045,253 @@ export const Listening = ({navigation}) => {
     return array;
   };
   const dispatch = useDispatch();
-  const item2 = progress;
-  const screenName = 'alphabet';
+  const navigation = useNavigation();
+  const item5 = progress;
+  const screenName = "alphabet";
   useEffect(() => {
     if (progress >= 9) {
-      dispatch(setCompletedListening({item2, screenName}));
+      dispatch(setCompletedWriting({ item5, screenName }));
+      navigation.navigate("dashboared");
     }
   });
   return (
     <View>
+      <Header
+        navigation={goBack}
+        title={"ALPHABET"}
+        backgroundColor={backgroundColor}
+      />
+
       <View style={styles.lengthProgress}>
-        <Text style={styles.textProgress}>{progress}/10</Text>
+        <Text style={[styles.textProgress, { color: "#e6584c" }]}>
+          {progress}/10
+        </Text>
         <Bar
           progress={progress / 10}
           width={wp(75)} // Example width using wp for responsive width
           height={hp(5)} // Example height using hp for responsive height
-          color="blue" // Example color
-          unfilledColor="#fff" // Example unfilled color
-          borderWidth={2} // Example border width
-          borderColor="black" // Example border color
-          borderRadius={10}
-          style={{marginVertical: 10}}
+          color="#e6584c" // Example color
+          unfilledColor="#ffdbd8"
+          borderRadius={15}
+          style={{ marginVertical: 15 }}
         />
       </View>
-      <TouchableOpacity
-        style={styles.volumeIcon}
-        onPress={handleVolumeIconPress}>
-        <Feather name="volume-2" color={'#fff'} size={50} />
-      </TouchableOpacity>
-      <View style={styles.mcqs}>
-        {shuffledOptions.map((option, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.option,
-              selectedOption === option && {
-                borderColor: option === spokenWord ? 'green' : 'red',
-              },
-            ]}
-            onPress={() => handleOptionSelect(option)}
-            disabled={!spokenWord}>
-            <Text style={styles.optionText}>{option}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showModal}
-        onRequestClose={() => setShowModal(false)}>
-        <View style={styles.modal}>
-          <View style={styles.modalView}>
-            <View style={{}}>
-              <AntDesign name="checkcircle" color={'#046928'} size={50} />
-              <View style={styles.okView}>
-                <Text style={styles.okText}>OK</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-//  reading component
-
-export const Reading = () => {
-  const [progress, setProgress] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [spokenWord, setSpokenWord] = useState(null);
-  const [shuffledOptions, setShuffledOptions] = useState([]);
-
-  const options = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
-
-  useEffect(() => {
-    getSelectedArray();
-  }, [currentQuestion]);
-
-  const getSelectedArray = async () => {
-    let shuffledArray = await shuffleArray([...options]);
-    const randomValues = shuffledArray.slice(0, 4);
-    setShuffledOptions([...randomValues]);
-    const randomIndex = Math.floor(Math.random() * randomValues.length);
-    const randomWord = randomValues[randomIndex];
-    setSpokenWord(randomWord);
-  };
-
-  const speakWord = () => {
-    Tts.speak(spokenWord);
-  };
-
-  const handleOptionSelect = option => {
-    setSelectedOption(option);
-    if (option === spokenWord) {
-      setProgress(progress + 1);
-      if (progress >= 9) {
-        // setShowModal(true);
-      } else {
-        setCurrentQuestion(currentQuestion + 1);
-      }
-      speakWord();
-    }
-  };
-
-  //   const getSelectedArray = async () => {
-  //     let shuffledArray = await shuffleArray([...options]);
-  //     console.log('shuffledArray', shuffledArray);
-  //     const randomValues = shuffledArray.slice(0, 4);
-  //     console.log('randomValues', randomValues);
-  //     setShuffledOptions([...randomValues]);
-  //     speakWord(randomValues);
-  //   };
-
-  //   const speakWord = randomValues => {
-  //     // const word = shuffledOptions[currentQuestion];
-  //     console.log('shuffledOptions', randomValues);
-  //     const randomIndex = Math.floor(Math.random() * randomValues.length);
-
-  //     // Get the word at the random index
-  //     const randomWord = randomValues[randomIndex];
-  //     setSpokenWord(randomWord);
-  //     Tts.speak(randomWord);
-  //   };
-
-  //   const handleOptionSelect = option => {
-  //     setSelectedOption(option);
-  //     if (option === spokenWord) {
-  //       setProgress(progress + 1);
-  //       if (progress >= 9) {
-  //         // navigation.goBack();
-  //         // setShowModal(true);
-  //       } else {
-  //         setCurrentQuestion(Math.floor(Math.random() * options.length));
-  //       }
-  //     }
-  //   };
-
-  //   const handleVolumeIconPress = () => {
-  //     Tts.setDefaultLanguage('en-US'); // Set default language for text-to-speech
-  //     Tts.setDefaultRate(0.5);
-  //     speakWord(shuffledOptions);
-  //   };
-
-  const shuffleArray = array => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-  const dispatch = useDispatch();
-  const item3 = progress;
-  const screenName = 'alphabet';
-  useEffect(() => {
-    if (progress >= 9) {
-      dispatch(setCompletedReading({item3, screenName}));
-    }
-  });
-  return (
-    <View>
-      <View style={styles.lengthProgress}>
-        <Text style={styles.textProgress}>{progress}/10</Text>
-        <Bar
-          progress={progress / 10}
-          width={wp(75)} // Example width using wp for responsive width
-          height={hp(5)} // Example height using hp for responsive height
-          color="blue" // Example color
-          unfilledColor="#fff" // Example unfilled color
-          borderWidth={2} // Example border width
-          borderColor="black" // Example border color
-          borderRadius={10}
-          style={{marginVertical: 10}}
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.volumeIcon}
-        // onPress={handleVolumeIconPress}
+      <View
+        style={{
+          width: wp(80),
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          alignSelf: "center",
+          marginVertical: 10,
+        }}
       >
-        <Text style={styles.spokenWordText}>{spokenWord}</Text>
-      </TouchableOpacity>
-      <View style={styles.mcqs}>
+        <TouchableOpacity
+          style={[styles.volumeIcon, { backgroundColor: "#e6584c" }]}
+          onPress={handleVolumeIconPress}
+        >
+          <Feather name="volume-2" color={"#fff"} size={50} />
+        </TouchableOpacity>
+        <View style={styles.option}>
+          <Text
+            style={{
+              color: "#000",
+              fontWeight: "bold",
+              fontSize: 50,
+              paddingVertical: 10,
+            }}
+          >
+            {spokenWord}
+          </Text>
+        </View>
+      </View>
+
+      <View
+        style={[
+          styles.textBox,
+          { borderColor: selecteWord ? "green" : "gray" },
+        ]}
+      >
+        <Text style={styles.textSelected}>{selecteWord}</Text>
+      </View>
+      <View style={[styles.mcqs, { marginTop: hp(5) }]}>
         {shuffledOptions.map((option, index) => (
           <TouchableOpacity
             key={index}
             style={[
-              styles.option,
+              styles.optionView,
+              { borderColor: "#c5473d", backgroundColor: "#e9594d", margin: 5 },
               selectedOption === option && {
-                borderColor: option === spokenWord ? 'green' : 'red',
+                borderColor: option === spokenWord ? "" : "red",
               },
             ]}
             onPress={() => handleOptionSelect(option)}
-            disabled={!spokenWord}>
-            <Text style={styles.optionText}>{option}</Text>
+            disabled={!spokenWord}
+          >
+            <Text style={[styles.optionTexts, { color: "#fff" }]}>
+              {selectedOption === option ? "" : option}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showModal}
-        onRequestClose={() => setShowModal(false)}>
-        <View style={styles.modal}>
-          <View style={styles.modalView}>
-            <View style={{}}>
-              <AntDesign name="checkcircle" color={'#046928'} size={50} />
-              <View style={styles.okView}>
-                <Text style={styles.okText}>OK</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  optionBImage: {
+    width: 50,
+    height: 50,
+    padding: 20,
+  },
+  optionsImage: {
+    width: 60,
+    height: 60,
+    padding: 30,
+  },
+  optionBView: {
+    width: wp(35),
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    borderWidth: 4,
+    borderColor: "gray",
+    borderRadius: 10,
+    margin: 10,
+    padding: 20,
+  },
+  optionBText: {
+    color: "green",
+    fontSize: 25,
+    paddingVertical: 12,
+  },
+  optionSelectionView: {
+    width: wp(30),
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "orange",
+    borderWidth: 4,
+    borderColor: "#78290F",
+    borderRadius: 10,
+    margin: 10,
+  },
+  optionSelectionText: {
+    color: "#fff",
+    fontSize: 20,
+  },
+  textBox: {
+    width: wp(10),
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginVertical: 10,
+    borderWidth: 4,
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
+    elevation: 2,
+    borderRadius: 15,
+  },
+  textSelected: {
+    color: "#000",
+    fontWeight: "bold",
+    fontSize: 20,
+    padding: 4,
+  },
+  optionTexts: {
+    fontSize: 30,
+    padding: 4,
+  },
+  optionView: {
+    width: wp(15),
+    padding: 2,
+    borderWidth: 4,
+    borderColor: "#78290F",
+    backgroundColor: "#BA5624",
+    marginVertical: 9,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
     width: wp(25),
     padding: 10,
     borderWidth: 4,
-    borderColor: 'gray',
-    backgroundColor: '#fff',
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
     margin: 10,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   item: {
     width: wp(100),
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   length: {
     width: wp(90),
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "center",
   },
   text: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#6495ED",
   },
 
   //listening style,
 
   lengthProgress: {
     width: wp(90),
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "center",
   },
   textProgress: {
     fontSize: 16,
-    color: '#000',
+    color: "#41cf57",
+  },
+  textProgressPink: {
+    fontSize: 16,
+    color: "#fb5fda",
   },
   volumeIcon: {
     width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginVertical: wp(10),
     borderRadius: 90,
-    backgroundColor: '#046928',
-    alignSelf: 'center',
-    padding: 24,
+    alignSelf: "center",
+    padding: 22,
   },
   mcqs: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     marginBottom: 20,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   option: {
     width: wp(40),
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 3,
-    padding: 10,
-    borderRadius: 5,
-    borderColor: '#ccc',
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 5,
+    padding: 30,
+    borderRadius: 15,
+    borderColor: "#ccc",
     margin: 5,
+    backgroundColor: "#fff",
   },
   modal: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   optionText: {
     fontSize: 50,
@@ -701,22 +1299,22 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: wp(50),
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   okView: {
     width: wp(20),
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-end",
   },
   okText: {
     fontSize: 20,
-    color: '#000',
+    color: "#000",
     padding: 10,
   },
   spokenWordText: {
-    fontSize: 20,
-    color: '#000',
-    fontWeight: 'bold',
+    fontSize: 30,
+    color: "#000",
+    fontWeight: "bold",
   },
 });

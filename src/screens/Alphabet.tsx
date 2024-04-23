@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -6,57 +6,69 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native';
-import {Header} from '../components/header';
+} from "react-native";
+import { Header } from "../components/header";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import Progress from 'react-native-progress';
-import {Vocabulary, Listening, Reading} from '../components/alphabetComponent';
+} from "react-native-responsive-screen";
+import Progress from "react-native-progress";
+import {
+  Vocabulary,
+  Listening,
+  Reading,
+  Memory,
+  Writing,
+} from "../components/alphabetComponent";
 
-const _Memory = () => {
-  return (
-    <View>
-      <Text>Memory</Text>
-    </View>
-  );
-};
-
-const _Writing = () => {
-  return (
-    <View>
-      <Text>_Writing</Text>
-    </View>
-  );
-};
-
-const Alphabet = ({route, navigation}: any) => {
-  console.log('route', route);
-  const {component} = route.params;
+const Alphabet = ({ route, navigation }: any) => {
+  console.log("route", route);
+  const { component } = route.params;
 
   const renderComponent = () => {
     switch (component) {
-      case '_Vocabulary':
-        return <Vocabulary />;
-      case '_Listening':
-        return <Listening />;
-      case '_Reading':
-        return <Reading />;
-      case '_Memory':
-        return <_Memory />;
-      case '_Writing':
-        return <_Writing />;
+      case "_Vocabulary":
+        return (
+          <Vocabulary
+            goBack={() => navigation.goBack()}
+            backgroundColor="#6495ED"
+          />
+        );
+      case "_Listening":
+        return (
+          <Listening
+            goBack={() => navigation.goBack()}
+            backgroundColor="#41cf57"
+          />
+        );
+      case "_Reading":
+        return (
+          <Reading
+            goBack={() => navigation.goBack()}
+            backgroundColor="#fb63dc"
+          />
+        );
+      case "_Memory":
+        return (
+          <Memory
+            goBack={() => navigation.goBack()}
+            backgroundColor="#fd7e14"
+          />
+        );
+      case "_Writing":
+        return (
+          <Writing
+            goBack={() => navigation.goBack()}
+            backgroundColor="#e6584c"
+          />
+        );
       default:
         return null;
     }
   };
 
   return (
-    <View style={{flex: 1, marginBottom: hp(8)}}>
-      <Header navigation={() => navigation.goBack()} title="Alphabet" />
-      {renderComponent()}
-    </View>
+    <View style={{ flex: 1, marginBottom: hp(8) }}>{renderComponent()}</View>
   );
 };
 export default Alphabet;
