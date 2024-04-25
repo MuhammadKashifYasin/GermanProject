@@ -28,115 +28,158 @@ import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 
-export const Vocabulary = ({ goBack, backgroundColor }) => {
+export const Vocabulary = ({ goBack, backgroundColor, title }) => {
   const [itemsPressed, setItemsPressed] = useState(0);
   const [pressedIndices, setPressedIndices] = useState([]);
-  const [modal, setModal] = useState(false);
   const [allLettersCompleted, setAllLettersCompleted] = useState(false);
   const data = [
     {
-      name: require("../assets/AtoZImages/A.jpeg"),
-      title: "A",
+      name: "0",
+      title: "NULL",
     },
     {
-      name: require("../assets/AtoZImages/B.jpeg"),
-      title: "B",
+      name: "1",
+      title: "EINS",
     },
     {
-      name: require("../assets/AtoZImages/C.jpeg"),
-      title: "C",
+      name: "2",
+      title: "ZWEI",
     },
     {
-      name: require("../assets/AtoZImages/d.jpeg"),
-      title: "D",
+      name: "3",
+      title: "DREI",
     },
     {
-      name: require("../assets/AtoZImages/e.jpeg"),
-      title: "E",
+      name: "4",
+      title: "VIER",
     },
     {
-      name: require("../assets/AtoZImages/f.png"),
-      title: "F",
+      name: "5",
+      title: "FÜNF",
     },
     {
-      name: require("../assets/AtoZImages/g.png"),
-      title: "G",
+      name: "6",
+      title: "SECHS",
     },
     {
-      name: require("../assets/AtoZImages/h.jpeg"),
-      title: "H",
+      name: "7",
+      title: "SIEBEN",
     },
     {
-      name: require("../assets/AtoZImages/i.jpeg"),
-      title: "I",
+      name: "8",
+      title: "ACHT",
     },
     {
-      name: require("../assets/AtoZImages/j.jpeg"),
-      title: "J",
+      name: "9",
+      title: "NEUN",
     },
     {
-      name: require("../assets/AtoZImages/k.jpeg"),
-      title: "K",
+      name: "10",
+      title: "ZEHN",
     },
     {
-      name: require("../assets/AtoZImages/l.jpeg"),
-      title: "L",
+      name: "11",
+      title: "ELF",
     },
     {
-      name: require("../assets/AtoZImages/m.png"),
-      title: "M",
+      name: "12",
+      title: "ZWÖLF",
     },
     {
-      name: require("../assets/AtoZImages/n.png"),
-      title: "N",
+      name: "13",
+      title: "DREIZEHN",
     },
     {
-      name: require("../assets/AtoZImages/o.png"),
-      title: "O",
+      name: "14",
+      title: "VIERZEHN",
     },
     {
-      name: require("../assets/AtoZImages/p.png"),
-      title: "P",
+      name: "15",
+      title: "FÜNFZEHN",
     },
     {
-      name: require("../assets/AtoZImages/q.png"),
-      title: "Q",
+      name: "16",
+      title: "SECHZEHN",
     },
     {
-      name: require("../assets/AtoZImages/r.png"),
-      title: "R",
+      name: "17",
+      title: "SIEBZEHN",
     },
     {
-      name: require("../assets/AtoZImages/s.jpeg"),
-      title: "S",
+      name: "18",
+      title: "ACHTZEHN",
     },
     {
-      name: require("../assets/AtoZImages/t.png"),
-      title: "T",
+      name: "19",
+      title: "NEUNZEHN",
     },
     {
-      name: require("../assets/AtoZImages/u.jpeg"),
-      title: "U",
+      name: "20",
+      title: "ZWANZIG",
     },
     {
-      name: require("../assets/AtoZImages/v.png"),
-      title: "V",
+      name: "21",
+      title: "EINUNDZWANZIG",
     },
     {
-      name: require("../assets/AtoZImages/w.png"),
-      title: "W",
+      name: "22",
+      title: "ZWEIUNDZWANZIG",
     },
     {
-      name: require("../assets/AtoZImages/x.jpeg"),
-      title: "X",
+      name: "23",
+      title: "DREIUNDZWANZIG",
     },
     {
-      name: require("../assets/AtoZImages/y.jpeg"),
-      title: "Y",
+      name: "30",
+      title: "DREISSIG",
     },
     {
-      name: require("../assets/AtoZImages/z.jpeg"),
-      title: "Z",
+      name: "40",
+      title: "VIERZIG",
+    },
+    {
+      name: "50",
+      title: "FÜNFZIG",
+    },
+    {
+      name: "60",
+      title: "SECHZIG",
+    },
+    {
+      name: "70",
+      title: "SIEBZIG",
+    },
+    {
+      name: "80",
+      title: "ACHTZIG",
+    },
+    {
+      name: "90",
+      title: "NEUNZIG",
+    },
+    {
+      name: "100",
+      title: "HUNDERT",
+    },
+    {
+      name: "101",
+      title: "HUNNDERTEINS",
+    },
+    {
+      name: "200",
+      title: "ZWEIHUNDERT",
+    },
+    {
+      name: "300",
+      title: "DREIHUNDERT",
+    },
+    {
+      name: "1000",
+      title: "TAUSEND",
+    },
+    {
+      name: "1000000",
+      title: "EINE MILLION",
     },
   ];
 
@@ -146,7 +189,7 @@ export const Vocabulary = ({ goBack, backgroundColor }) => {
     Tts.setDefaultLanguage("de-DE"); // Set default language for text-to-speech
     Tts.setDefaultRate(0.5); // Set default speaking rate
     const timeout = setTimeout(() => {
-      speakWord("Alphabet");
+      speakWord("ZAHLEN");
     }, 2000);
 
     // Clear the timeout to avoid memory leaks
@@ -179,40 +222,34 @@ export const Vocabulary = ({ goBack, backgroundColor }) => {
     Tts.speak(word, { language: "de-DE" });
   };
 
-  useEffect(() => {
-    if (itemsPressed === 26) {
-      setModal(true);
-      // Check if alphabet is defined
-    }
-  }, [itemsPressed]);
   const item = itemsPressed;
-  const screenName = "alphabet";
+  const screenName = "number";
 
   useEffect(() => {
-    if (itemsPressed === 26) {
+    if (itemsPressed === 37) {
       dispatch(setCompletedVocabulary({ item, screenName }));
     }
   }, [itemsPressed]);
 
   useEffect(() => {
-    if (itemsPressed === 26) {
+    if (itemsPressed === 37) {
       setTimeout(() => {
         navigation.navigate("dashboared");
       }, 2000);
     }
   }, [itemsPressed]);
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginBottom: hp(14) }}>
       <Header
         navigation={goBack}
-        title={"ALPHABET"}
+        title={title}
         backgroundColor={backgroundColor}
       />
-      {completedVocabularies?.item === 26 &&
-      completedVocabularies?.screenName === "alphabet" ? (
+      {completedVocabularies?.item === 37 &&
+      completedVocabularies?.screenName === "number" ? (
         <View>
           <View style={styles.length}>
-            <Text style={styles.text}>26/26</Text>
+            <Text style={styles.text}>37/37</Text>
             <Bar
               progress={1}
               width={wp(75)}
@@ -235,7 +272,7 @@ export const Vocabulary = ({ goBack, backgroundColor }) => {
                     { borderColor: "#6495ED" }, // Set border color to blue for completed letters
                   ]}
                 >
-                  <Image source={item.name} style={{ width: 50, height: 50 }} />
+                  <Text style={{ fontSize: 30 }}>{item.name}</Text>
                   <Text style={{ fontSize: 20 }}>{item.title}</Text>
                 </TouchableOpacity>
               ))}
@@ -245,7 +282,7 @@ export const Vocabulary = ({ goBack, backgroundColor }) => {
       ) : (
         <View>
           <View style={styles.length}>
-            <Text style={styles.text}>{itemsPressed}/26</Text>
+            <Text style={styles.text}>{itemsPressed}/37</Text>
             <Bar
               progress={progress}
               width={wp(75)}
@@ -267,8 +304,13 @@ export const Vocabulary = ({ goBack, backgroundColor }) => {
                     isPressed(index) && { borderColor: "#6495ED" },
                   ]}
                 >
-                  <Image source={item.name} style={{ width: 50, height: 50 }} />
-                  <Text style={{ fontSize: 20, padding: 10 }}>
+                  <Text
+                    style={{ fontSize: 30, color: "#000", fontWeight: "bold" }}
+                  >
+                    {item.name}
+                  </Text>
+
+                  <Text style={{ fontSize: 20, padding: 10, color: "#000" }}>
                     {item.title}
                   </Text>
                 </TouchableOpacity>
@@ -283,7 +325,7 @@ export const Vocabulary = ({ goBack, backgroundColor }) => {
 
 //   Listning component
 
-export const Listening = ({ goBack, backgroundColor }) => {
+export const Listening = ({ goBack, backgroundColor, title }) => {
   const [progress, setProgress] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -291,32 +333,154 @@ export const Listening = ({ goBack, backgroundColor }) => {
   const [shuffledImages, setShuffledImages] = useState([]);
 
   const imagesWithTitles = [
-    { image: require("../assets/AtoZImages/A.jpeg"), title: "A" },
-    { image: require("../assets/AtoZImages/B.jpeg"), title: "B" },
-    { image: require("../assets/AtoZImages/C.jpeg"), title: "C" },
-    { image: require("../assets/AtoZImages/d.jpeg"), title: "D" },
-    { image: require("../assets/AtoZImages/e.jpeg"), title: "E" },
-    { image: require("../assets/AtoZImages/f.png"), title: "F" },
-    { image: require("../assets/AtoZImages/g.png"), title: "G" },
-    { image: require("../assets/AtoZImages/h.jpeg"), title: "H" },
-    { image: require("../assets/AtoZImages/i.jpeg"), title: "I" },
-    { image: require("../assets/AtoZImages/j.jpeg"), title: "J" },
-    { image: require("../assets/AtoZImages/k.jpeg"), title: "K" },
-    { image: require("../assets/AtoZImages/l.jpeg"), title: "L" },
-    { image: require("../assets/AtoZImages/m.png"), title: "M" },
-    { image: require("../assets/AtoZImages/n.png"), title: "N" },
-    { image: require("../assets/AtoZImages/o.png"), title: "O" },
-    { image: require("../assets/AtoZImages/p.png"), title: "P" },
-    { image: require("../assets/AtoZImages/q.png"), title: "Q" },
-    { image: require("../assets/AtoZImages/r.png"), title: "R" },
-    { image: require("../assets/AtoZImages/s.jpeg"), title: "S" },
-    { image: require("../assets/AtoZImages/t.png"), title: "T" },
-    { image: require("../assets/AtoZImages/u.jpeg"), title: "U" },
-    { image: require("../assets/AtoZImages/v.png"), title: "V" },
-    { image: require("../assets/AtoZImages/w.png"), title: "W" },
-    { image: require("../assets/AtoZImages/x.jpeg"), title: "X" },
-    { image: require("../assets/AtoZImages/y.jpeg"), title: "Y" },
-    { image: require("../assets/AtoZImages/z.jpeg"), title: "Z" },
+    {
+      name: "0",
+      title: "NULL",
+    },
+    {
+      name: "1",
+      title: "EINS",
+    },
+    {
+      name: "2",
+      title: "ZWEI",
+    },
+    {
+      name: "3",
+      title: "DREI",
+    },
+    {
+      name: "4",
+      title: "VIER",
+    },
+    {
+      name: "5",
+      title: "FÜNF",
+    },
+    {
+      name: "6",
+      title: "SECHS",
+    },
+    {
+      name: "7",
+      title: "SIEBEN",
+    },
+    {
+      name: "8",
+      title: "ACHT",
+    },
+    {
+      name: "9",
+      title: "NEUN",
+    },
+    {
+      name: "10",
+      title: "ZEHN",
+    },
+    {
+      name: "11",
+      title: "ELF",
+    },
+    {
+      name: "12",
+      title: "ZWÖLF",
+    },
+    {
+      name: "13",
+      title: "DREIZEHN",
+    },
+    {
+      name: "14",
+      title: "VIERZEHN",
+    },
+    {
+      name: "15",
+      title: "FÜNFZEHN",
+    },
+    {
+      name: "16",
+      title: "SECHZEHN",
+    },
+    {
+      name: "17",
+      title: "SIEBZEHN",
+    },
+    {
+      name: "18",
+      title: "ACHTZEHN",
+    },
+    {
+      name: "19",
+      title: "NEUNZEHN",
+    },
+    {
+      name: "20",
+      title: "ZWANZIG",
+    },
+    {
+      name: "21",
+      title: "EINUNDZWANZIG",
+    },
+    {
+      name: "22",
+      title: "ZWEIUNDZWANZIG",
+    },
+    {
+      name: "23",
+      title: "DREIUNDZWANZIG",
+    },
+    {
+      name: "30",
+      title: "DREISSIG",
+    },
+    {
+      name: "40",
+      title: "VIERZIG",
+    },
+    {
+      name: "50",
+      title: "FÜNFZIG",
+    },
+    {
+      name: "60",
+      title: "SECHZIG",
+    },
+    {
+      name: "70",
+      title: "SIEBZIG",
+    },
+    {
+      name: "80",
+      title: "ACHTZIG",
+    },
+    {
+      name: "90",
+      title: "NEUNZIG",
+    },
+    {
+      name: "100",
+      title: "HUNDERT",
+    },
+    {
+      name: "101",
+      title: "HUNNDERTEINS",
+    },
+    {
+      name: "200",
+      title: "ZWEIHUNDERT",
+    },
+    {
+      name: "300",
+      title: "DREIHUNDERT",
+    },
+    {
+      name: "1000",
+      title: "TAUSEND",
+    },
+    {
+      name: "1000000",
+      title: "EINE MILLION",
+    },
   ];
 
   useEffect(() => {
@@ -390,7 +554,7 @@ export const Listening = ({ goBack, backgroundColor }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const item2 = progress;
-  const screenName = "alphabet";
+  const screenName = "number";
   useEffect(() => {
     if (progress > 9) {
       dispatch(setCompletedListening({ item2, screenName }));
@@ -404,7 +568,7 @@ export const Listening = ({ goBack, backgroundColor }) => {
     <View>
       <Header
         navigation={goBack}
-        title={"ALPHABET"}
+        title={title}
         backgroundColor={backgroundColor}
       />
 
@@ -434,12 +598,16 @@ export const Listening = ({ goBack, backgroundColor }) => {
               styles.option,
               selectedOption === item && {
                 borderColor: item.title === spokenWord ? "green" : "red",
+                padding: 15,
               },
             ]}
             onPress={() => handleOptionSelect(item)}
             disabled={!spokenWord}
           >
-            <Image source={item.image} style={styles.optionsImage} />
+            <Text style={{ color: "#000", fontWeight: "bold", fontSize: 30 }}>
+              {item.name}
+            </Text>
+            {/* <Image source={item.name} style={styles.optionsImage} /> */}
           </TouchableOpacity>
         ))}
       </View>
@@ -449,7 +617,7 @@ export const Listening = ({ goBack, backgroundColor }) => {
 
 //  reading component
 
-export const Reading = ({ goBack, backgroundColor }) => {
+export const Reading = ({ goBack, backgroundColor, title }) => {
   const [progress, setProgress] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -458,32 +626,154 @@ export const Reading = ({ goBack, backgroundColor }) => {
   const [shuffledOptions, setShuffledOptions] = useState([]);
 
   const options = [
-    { image: require("../assets/AtoZImages/A.jpeg"), title: "A" },
-    { image: require("../assets/AtoZImages/B.jpeg"), title: "B" },
-    { image: require("../assets/AtoZImages/C.jpeg"), title: "C" },
-    { image: require("../assets/AtoZImages/d.jpeg"), title: "D" },
-    { image: require("../assets/AtoZImages/e.jpeg"), title: "E" },
-    { image: require("../assets/AtoZImages/f.png"), title: "F" },
-    { image: require("../assets/AtoZImages/g.png"), title: "G" },
-    { image: require("../assets/AtoZImages/h.jpeg"), title: "H" },
-    { image: require("../assets/AtoZImages/i.jpeg"), title: "I" },
-    { image: require("../assets/AtoZImages/j.jpeg"), title: "J" },
-    { image: require("../assets/AtoZImages/k.jpeg"), title: "K" },
-    { image: require("../assets/AtoZImages/l.jpeg"), title: "L" },
-    { image: require("../assets/AtoZImages/m.png"), title: "M" },
-    { image: require("../assets/AtoZImages/n.png"), title: "N" },
-    { image: require("../assets/AtoZImages/o.png"), title: "O" },
-    { image: require("../assets/AtoZImages/p.png"), title: "P" },
-    { image: require("../assets/AtoZImages/q.png"), title: "Q" },
-    { image: require("../assets/AtoZImages/r.png"), title: "R" },
-    { image: require("../assets/AtoZImages/s.jpeg"), title: "S" },
-    { image: require("../assets/AtoZImages/t.png"), title: "T" },
-    { image: require("../assets/AtoZImages/u.jpeg"), title: "U" },
-    { image: require("../assets/AtoZImages/v.png"), title: "V" },
-    { image: require("../assets/AtoZImages/w.png"), title: "W" },
-    { image: require("../assets/AtoZImages/x.jpeg"), title: "X" },
-    { image: require("../assets/AtoZImages/y.jpeg"), title: "Y" },
-    { image: require("../assets/AtoZImages/z.jpeg"), title: "Z" },
+    {
+      name: "0",
+      title: "NULL",
+    },
+    {
+      name: "1",
+      title: "EINS",
+    },
+    {
+      name: "2",
+      title: "ZWEI",
+    },
+    {
+      name: "3",
+      title: "DREI",
+    },
+    {
+      name: "4",
+      title: "VIER",
+    },
+    {
+      name: "5",
+      title: "FÜNF",
+    },
+    {
+      name: "6",
+      title: "SECHS",
+    },
+    {
+      name: "7",
+      title: "SIEBEN",
+    },
+    {
+      name: "8",
+      title: "ACHT",
+    },
+    {
+      name: "9",
+      title: "NEUN",
+    },
+    {
+      name: "10",
+      title: "ZEHN",
+    },
+    {
+      name: "11",
+      title: "ELF",
+    },
+    {
+      name: "12",
+      title: "ZWÖLF",
+    },
+    {
+      name: "13",
+      title: "DREIZEHN",
+    },
+    {
+      name: "14",
+      title: "VIERZEHN",
+    },
+    {
+      name: "15",
+      title: "FÜNFZEHN",
+    },
+    {
+      name: "16",
+      title: "SECHZEHN",
+    },
+    {
+      name: "17",
+      title: "SIEBZEHN",
+    },
+    {
+      name: "18",
+      title: "ACHTZEHN",
+    },
+    {
+      name: "19",
+      title: "NEUNZEHN",
+    },
+    {
+      name: "20",
+      title: "ZWANZIG",
+    },
+    {
+      name: "21",
+      title: "EINUNDZWANZIG",
+    },
+    {
+      name: "22",
+      title: "ZWEIUNDZWANZIG",
+    },
+    {
+      name: "23",
+      title: "DREIUNDZWANZIG",
+    },
+    {
+      name: "30",
+      title: "DREISSIG",
+    },
+    {
+      name: "40",
+      title: "VIERZIG",
+    },
+    {
+      name: "50",
+      title: "FÜNFZIG",
+    },
+    {
+      name: "60",
+      title: "SECHZIG",
+    },
+    {
+      name: "70",
+      title: "SIEBZIG",
+    },
+    {
+      name: "80",
+      title: "ACHTZIG",
+    },
+    {
+      name: "90",
+      title: "NEUNZIG",
+    },
+    {
+      name: "100",
+      title: "HUNDERT",
+    },
+    {
+      name: "101",
+      title: "HUNNDERTEINS",
+    },
+    {
+      name: "200",
+      title: "ZWEIHUNDERT",
+    },
+    {
+      name: "300",
+      title: "DREIHUNDERT",
+    },
+    {
+      name: "1000",
+      title: "TAUSEND",
+    },
+    {
+      name: "1000000",
+      title: "EINE MILLION",
+    },
   ];
 
   useEffect(() => {
@@ -538,7 +828,7 @@ export const Reading = ({ goBack, backgroundColor }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const item3 = progress;
-  const screenName = "alphabet";
+  const screenName = "number";
   useEffect(() => {
     if (progress > 9) {
       dispatch(setCompletedReading({ item3, screenName }));
@@ -551,7 +841,7 @@ export const Reading = ({ goBack, backgroundColor }) => {
     <View>
       <Header
         navigation={goBack}
-        title={"ALPHABET"}
+        title={title}
         backgroundColor={backgroundColor}
       />
 
@@ -571,7 +861,7 @@ export const Reading = ({ goBack, backgroundColor }) => {
         style={styles.volumeIcon}
         // onPress={handleVolumeIconPress}
       > */}
-      <View style={styles.volumeIcon}>
+      <View style={[styles.volumeIcon, { width: wp(80) }]}>
         <Text style={styles.spokenWordText}>{spokenWord}</Text>
       </View>
       {/* </TouchableOpacity> */}
@@ -588,7 +878,10 @@ export const Reading = ({ goBack, backgroundColor }) => {
             onPress={() => handleOptionSelect(item)}
             disabled={!spokenWord}
           >
-            <Image source={item.image} style={styles.optionsImage} />
+            <Text style={{ color: "#000", fontWeight: "bold", fontSize: 18 }}>
+              {item.name}
+            </Text>
+            {/* <Image source={item.image} style={styles.optionsImage} /> */}
           </TouchableOpacity>
         ))}
       </View>
@@ -613,7 +906,7 @@ export const Reading = ({ goBack, backgroundColor }) => {
   );
 };
 
-export const Memory = ({ goBack, backgroundColor }) => {
+export const Memory = ({ goBack, backgroundColor, title }) => {
   const [upperState, setUpperState] = useState([]);
   const [lowerState, setLowerState] = useState([]);
   const [wordArray, setWordArray] = useState([]);
@@ -624,138 +917,193 @@ export const Memory = ({ goBack, backgroundColor }) => {
   const [shuffledOnce, setShuffledOnce] = useState(false);
 
   const options = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
+    "NULL",
+    "EINS",
+    "ZWEI",
+    "DREI",
+    "VIER",
+    "FÜNF",
+    "SECHS",
+    "SIEBEN",
+    "ACHT",
+    "NEUN",
+    "ZEHN",
+    "ELF",
+    "ZWÖLF",
+    "DREIZEHN",
+    "VIERZEHN",
+    "FÜNFZEHN",
+    "SECHZEHN",
+    "SIEBZEHN",
+    "ACHTZEHN",
+    "NEUNZEHN",
+    "ZWANZIG",
+    "EINUNDZWANZIG",
+    "ZWEIUNDZWANZIG",
+    "DREIUNDZWANZIG",
+    "DREISSIG",
+    "VIERZIG",
+    "FÜNFZIG",
+    "SECHZIG",
+    "SIEBZIG",
+    "ACHTZIG",
+    "NEUNZIG",
+    "HUNDERT",
+    "HUNNDERTEINS",
+    "ZWEIHUNDERT",
+    "DREIHUNDERT",
+    "TAUSEND",
+    "EINE MILLION",
   ];
 
   const ImageArr = [
     {
-      title: "A",
-      image: require("../assets/AtoZImages/A.jpeg"),
+      name: "0",
+      title: "NULL",
     },
     {
-      title: "B",
-      image: require("../assets/AtoZImages/B.jpeg"),
+      name: "1",
+      title: "EINS",
     },
     {
-      title: "C",
-      image: require("../assets/AtoZImages/C.jpeg"),
+      name: "2",
+      title: "ZWEI",
     },
     {
-      title: "D",
-      image: require("../assets/AtoZImages/d.jpeg"),
+      name: "3",
+      title: "DREI",
     },
     {
-      title: "E",
-      image: require("../assets/AtoZImages/e.jpeg"),
+      name: "4",
+      title: "VIER",
     },
     {
-      title: "F",
-      image: require("../assets/AtoZImages/f.png"),
+      name: "5",
+      title: "FÜNF",
     },
     {
-      title: "G",
-      image: require("../assets/AtoZImages/g.png"),
+      name: "6",
+      title: "SECHS",
     },
     {
-      title: "H",
-      image: require("../assets/AtoZImages/h.jpeg"),
+      name: "7",
+      title: "SIEBEN",
     },
     {
-      title: "I",
-      image: require("../assets/AtoZImages/i.jpeg"),
+      name: "8",
+      title: "ACHT",
     },
     {
-      title: "J",
-      image: require("../assets/AtoZImages/j.jpeg"),
+      name: "9",
+      title: "NEUN",
     },
     {
-      title: "K",
-      image: require("../assets/AtoZImages/k.jpeg"),
+      name: "10",
+      title: "ZEHN",
     },
     {
-      title: "L",
-      image: require("../assets/AtoZImages/l.jpeg"),
+      name: "11",
+      title: "ELF",
     },
     {
-      title: "M",
-      image: require("../assets/AtoZImages/m.png"),
+      name: "12",
+      title: "ZWÖLF",
     },
     {
-      title: "N",
-      image: require("../assets/AtoZImages/n.png"),
+      name: "13",
+      title: "DREIZEHN",
     },
     {
-      title: "O",
-      image: require("../assets/AtoZImages/o.png"),
+      name: "14",
+      title: "VIERZEHN",
     },
     {
-      title: "P",
-      image: require("../assets/AtoZImages/p.png"),
+      name: "15",
+      title: "FÜNFZEHN",
     },
     {
-      title: "Q",
-      image: require("../assets/AtoZImages/q.png"),
+      name: "16",
+      title: "SECHZEHN",
     },
     {
-      title: "R",
-      image: require("../assets/AtoZImages/r.png"),
+      name: "17",
+      title: "SIEBZEHN",
     },
     {
-      title: "S",
-      image: require("../assets/AtoZImages/s.jpeg"),
+      name: "18",
+      title: "ACHTZEHN",
     },
     {
-      title: "T",
-      image: require("../assets/AtoZImages/t.png"),
+      name: "19",
+      title: "NEUNZEHN",
     },
     {
-      title: "U",
-      image: require("../assets/AtoZImages/u.jpeg"),
+      name: "20",
+      title: "ZWANZIG",
     },
     {
-      title: "V",
-      image: require("../assets/AtoZImages/v.png"),
+      name: "21",
+      title: "EINUNDZWANZIG",
     },
     {
-      title: "W",
-      image: require("../assets/AtoZImages/w.png"),
+      name: "22",
+      title: "ZWEIUNDZWANZIG",
     },
     {
-      title: "X",
-      image: require("../assets/AtoZImages/x.jpeg"),
+      name: "23",
+      title: "DREIUNDZWANZIG",
     },
     {
-      title: "Y",
-      image: require("../assets/AtoZImages/y.jpeg"),
+      name: "30",
+      title: "DREISSIG",
     },
     {
-      title: "Z",
-      image: require("../assets/AtoZImages/z.jpeg"),
+      name: "40",
+      title: "VIERZIG",
+    },
+    {
+      name: "50",
+      title: "FÜNFZIG",
+    },
+    {
+      name: "60",
+      title: "SECHZIG",
+    },
+    {
+      name: "70",
+      title: "SIEBZIG",
+    },
+    {
+      name: "80",
+      title: "ACHTZIG",
+    },
+    {
+      name: "90",
+      title: "NEUNZIG",
+    },
+    {
+      name: "100",
+      title: "HUNDERT",
+    },
+    {
+      name: "101",
+      title: "HUNNDERTEINS",
+    },
+    {
+      name: "200",
+      title: "ZWEIHUNDERT",
+    },
+    {
+      name: "300",
+      title: "DREIHUNDERT",
+    },
+    {
+      name: "1000",
+      title: "TAUSEND",
+    },
+    {
+      name: "1000000",
+      title: "EINE MILLION",
     },
   ];
 
@@ -826,7 +1174,7 @@ export const Memory = ({ goBack, backgroundColor }) => {
 
   const dispatchData = () => {
     const item4 = progress;
-    const screenName = "alphabet";
+    const screenName = "number";
     if (progress === 12) {
       dispatch(setCompletedMemory({ item4, screenName }));
     }
@@ -846,7 +1194,7 @@ export const Memory = ({ goBack, backgroundColor }) => {
     <View>
       <Header
         navigation={goBack}
-        title={"ALPHABET"}
+        title={title}
         backgroundColor={backgroundColor}
       />
 
@@ -855,7 +1203,7 @@ export const Memory = ({ goBack, backgroundColor }) => {
           {progress}/12
         </Text>
         <Bar
-          progress={progress / 10}
+          progress={progress / 12}
           width={wp(75)} // Example width using wp for responsive width
           height={hp(5)} // Example height using hp for responsive height
           color="#e68d00" // Example color
@@ -864,18 +1212,18 @@ export const Memory = ({ goBack, backgroundColor }) => {
           style={{ marginVertical: 15 }}
         />
       </View>
-      <View style={styles.mcqs}>
+      <View style={[styles.mcqs, { width: wp(100) }]}>
         {upperState?.map((option, index) => (
           <TouchableOpacity
             key={index}
             style={[
-              styles.optionSelectionView,
+              styles.optionSelectionViewMatching,
               {
                 backgroundColor:
                   selectedWordArray.includes(option) ||
                   selectedUpperWord == option
                     ? "#fff"
-                    : "#ed9100",
+                    : "#ee9200",
                 borderColor: selectedWordArray.includes(option)
                   ? "green"
                   : "#cf7f01",
@@ -890,7 +1238,10 @@ export const Memory = ({ goBack, backgroundColor }) => {
             <Text
               style={[
                 styles.optionSelectionText,
-                { color: selectedUpperWord == option ? "black" : "white" },
+                {
+                  color: selectedUpperWord == option ? "black" : "white",
+                  fontSize: 18,
+                },
               ]}
             >
               {option}
@@ -917,6 +1268,7 @@ export const Memory = ({ goBack, backgroundColor }) => {
                         ? "green"
                         : "gray",
                     opacity: selectedWordArray.includes(option) ? 0.1 : 1,
+                    padding: 9,
                   },
                 ]}
                 onPress={() => {
@@ -925,10 +1277,15 @@ export const Memory = ({ goBack, backgroundColor }) => {
                 disabled={selectedWordArray.includes(option)}
               >
                 {/* Assuming you want to display the image */}
-                <Image
-                  source={filteredImages[0].image}
+                {/* <Image
+                  source={filteredImages[0].name}
                   style={styles.optionBImage}
-                />
+                /> */}
+                <Text
+                  style={{ color: "#000", fontWeight: "bold", fontSize: 40 }}
+                >
+                  {filteredImages[0].name}
+                </Text>
               </TouchableOpacity>
             );
           } else {
@@ -946,35 +1303,163 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [spokenWord, setSpokenWord] = useState(null);
   const [shuffledOptions, setShuffledOptions] = useState([]);
-  const [selecteWord, setSelectedWord] = useState("");
+  const [selectedWord, setSelectedWord] = useState("");
+  const [randomized, setRandomized] = useState(false);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [shuffledLetters, setShuffledLetters] = useState([]);
+  console.log("🚀 ~ Writing ~ shuffledLetters:", shuffledLetters);
+  const [selectedLetters, setSelectedLetters] = useState([]);
+  const [borderColor, setBorderColor] = useState("gray");
 
   const options = [
-    { image: require("../assets/AtoZImages/A.jpeg"), title: "A" },
-    { image: require("../assets/AtoZImages/B.jpeg"), title: "B" },
-    { image: require("../assets/AtoZImages/C.jpeg"), title: "C" },
-    { image: require("../assets/AtoZImages/d.jpeg"), title: "D" },
-    { image: require("../assets/AtoZImages/e.jpeg"), title: "E" },
-    { image: require("../assets/AtoZImages/f.png"), title: "F" },
-    { image: require("../assets/AtoZImages/g.png"), title: "G" },
-    { image: require("../assets/AtoZImages/h.jpeg"), title: "H" },
-    { image: require("../assets/AtoZImages/i.jpeg"), title: "I" },
-    { image: require("../assets/AtoZImages/j.jpeg"), title: "J" },
-    { image: require("../assets/AtoZImages/k.jpeg"), title: "K" },
-    { image: require("../assets/AtoZImages/l.jpeg"), title: "L" },
-    { image: require("../assets/AtoZImages/m.png"), title: "M" },
-    { image: require("../assets/AtoZImages/n.png"), title: "N" },
-    { image: require("../assets/AtoZImages/o.png"), title: "O" },
-    { image: require("../assets/AtoZImages/p.png"), title: "P" },
-    { image: require("../assets/AtoZImages/q.png"), title: "Q" },
-    { image: require("../assets/AtoZImages/r.png"), title: "R" },
-    { image: require("../assets/AtoZImages/s.jpeg"), title: "S" },
-    { image: require("../assets/AtoZImages/t.png"), title: "T" },
-    { image: require("../assets/AtoZImages/u.jpeg"), title: "U" },
-    { image: require("../assets/AtoZImages/v.png"), title: "V" },
-    { image: require("../assets/AtoZImages/w.png"), title: "W" },
-    { image: require("../assets/AtoZImages/x.jpeg"), title: "X" },
-    { image: require("../assets/AtoZImages/y.jpeg"), title: "Y" },
-    { image: require("../assets/AtoZImages/z.jpeg"), title: "Z" },
+    {
+      name: "0",
+      title: "NULL",
+    },
+    {
+      name: "1",
+      title: "EINS",
+    },
+    {
+      name: "2",
+      title: "ZWEI",
+    },
+    {
+      name: "3",
+      title: "DREI",
+    },
+    {
+      name: "4",
+      title: "VIER",
+    },
+    {
+      name: "5",
+      title: "FÜNF",
+    },
+    {
+      name: "6",
+      title: "SECHS",
+    },
+    {
+      name: "7",
+      title: "SIEBEN",
+    },
+    {
+      name: "8",
+      title: "ACHT",
+    },
+    {
+      name: "9",
+      title: "NEUN",
+    },
+    {
+      name: "10",
+      title: "ZEHN",
+    },
+    {
+      name: "11",
+      title: "ELF",
+    },
+    {
+      name: "12",
+      title: "ZWÖLF",
+    },
+    {
+      name: "13",
+      title: "DREIZEHN",
+    },
+    {
+      name: "14",
+      title: "VIERZEHN",
+    },
+    {
+      name: "15",
+      title: "FÜNFZEHN",
+    },
+    {
+      name: "16",
+      title: "SECHZEHN",
+    },
+    {
+      name: "17",
+      title: "SIEBZEHN",
+    },
+    {
+      name: "18",
+      title: "ACHTZEHN",
+    },
+    {
+      name: "19",
+      title: "NEUNZEHN",
+    },
+    {
+      name: "20",
+      title: "ZWANZIG",
+    },
+    {
+      name: "21",
+      title: "EINUNDZWANZIG",
+    },
+    {
+      name: "22",
+      title: "ZWEIUNDZWANZIG",
+    },
+    {
+      name: "23",
+      title: "DREIUNDZWANZIG",
+    },
+    {
+      name: "30",
+      title: "DREISSIG",
+    },
+    {
+      name: "40",
+      title: "VIERZIG",
+    },
+    {
+      name: "50",
+      title: "FÜNFZIG",
+    },
+    {
+      name: "60",
+      title: "SECHZIG",
+    },
+    {
+      name: "70",
+      title: "SIEBZIG",
+    },
+    {
+      name: "80",
+      title: "ACHTZIG",
+    },
+    {
+      name: "90",
+      title: "NEUNZIG",
+    },
+    {
+      name: "100",
+      title: "HUNDERT",
+    },
+    {
+      name: "101",
+      title: "HUNNDERTEINS",
+    },
+    {
+      name: "200",
+      title: "ZWEIHUNDERT",
+    },
+    {
+      name: "300",
+      title: "DREIHUNDERT",
+    },
+    {
+      name: "1000",
+      title: "TAUSEND",
+    },
+    {
+      name: "1000000",
+      title: "EINEMILLION",
+    },
   ];
 
   useEffect(() => {
@@ -983,23 +1468,19 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
     }, 1000);
   }, [currentQuestion]);
 
-  // const getSelectedArray = async () => {
-  //   let shuffledArray = await shuffleArray([...options]);
-  //   console.log("shuffledArray", shuffledArray);
-  //   const randomValues = shuffledArray.slice(0, 10);
-  //   console.log("randomValues", randomValues);
-  //   setShuffledOptions([...randomValues]);
-  //   // setTimeout(() => {
-  //   speakWord(randomValues);
-  //   // }, 5000);
-  // };
-
   const getSelectedArray = async () => {
     let shuffledArray = await shuffleArray([...options]);
-    const randomValues = shuffledArray.slice(0, 10);
+    const randomValues = shuffledArray.slice(0, 1);
     setShuffledOptions([...randomValues]);
     speakWord(randomValues);
   };
+
+  useEffect(() => {
+    if (spokenWord) {
+      const shuffledWord = shuffleArray(spokenWord.title.split(""));
+      setShuffledLetters(shuffledWord);
+    }
+  }, [spokenWord]);
 
   const speakWord = (randomValues) => {
     // const word = shuffledOptions[currentQuestion];
@@ -1009,35 +1490,72 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
     // Get the word at the random index
     const randomWord = randomValues[randomIndex];
     setSpokenWord(randomWord);
-    Tts.speak(randomWord.title);
+    Tts.speak(randomWord.title, { language: "de-DE" });
   };
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    if (option === spokenWord) {
-      setProgress(progress + 1);
-      setSelectedWord(spokenWord?.title); // Set the selected word
-      if (progress < 10) {
-        setTimeout(() => {
-          setTimeout(() => {
-            setSelectedWord("");
-          }, 2000);
-          getSelectedArray();
-        }, 2000);
-      }
+  const handleOptionSelect = (letter: any, index: number) => {
+    console.log("🚀 ~ handleOptionSelect ~ index:", index);
+    const updatedShuffledLetters = [...shuffledLetters];
+    updatedShuffledLetters[index] = "";
+    setShuffledLetters(updatedShuffledLetters);
+
+    const updatedSelectedLetters = [...selectedLetters];
+    updatedSelectedLetters.push(letter); // Push the selected letter to the selected letters array
+
+    setSelectedLetters(updatedSelectedLetters); // Update the selected letters state
+
+    // Construct the selected word from the selected letters array
+    const updatedSelectedWord = updatedSelectedLetters.join("");
+    setSelectedWord(updatedSelectedWord); // Update the selected word state
+
+    console.log("handleOptionSelect", letter);
+    console.log("selectedLetters", updatedSelectedLetters);
+    console.log("selectedWord", updatedSelectedWord);
+  };
+  const speakNextWord = () => {
+    if (currentWordIndex < options.length - 1) {
+      const nextWord = options[currentWordIndex + 1];
+      setSpokenWord(nextWord);
+      Tts.speak(nextWord.title);
+      setCurrentWordIndex(currentWordIndex + 1);
     } else {
-      // Wrong word selected
-      setSelectedOption(option);
-      setTimeout(() => {
-        setSelectedOption(null); // Clear selected option after 1 second
-      }, 1000);
+      // End of the game or level, handle accordingly
     }
   };
+
+  console.log("selected word=====>", selectedWord);
   useEffect(() => {
-    setTimeout(() => {
-      setSelectedWord("");
-    }, 500);
-  });
+    if (shuffledLetters.length > 0) {
+      console.log("selected word", selectedWord, shuffledOptions[0].title);
+
+      const updatedSelectedLetters = shuffledLetters.filter(
+        (letter) => letter !== ""
+      );
+      if (updatedSelectedLetters.length === 0) {
+        if (shuffledOptions[0].title == selectedWord) {
+          setBorderColor("green"); // Set border color to green
+          Tts.speak("Excellent");
+          setProgress(progress + 1);
+          setTimeout(() => {
+            setBorderColor("gray"); // Revert the border color to its original state after 2 seconds
+            setShuffledLetters([]);
+            setSelectedWord("");
+            setSelectedLetters([]);
+            getSelectedArray();
+          }, 3000);
+        } else {
+          Tts.speak("try again");
+          setSelectedWord("");
+          setSelectedLetters([]);
+          const shuffledWord = shuffleArray(spokenWord.title.split(""));
+          setShuffledLetters(shuffledWord);
+          setTimeout(() => {
+            setBorderColor("gray"); // Revert the border color to its original state
+          }, 2000);
+        }
+      }
+    }
+  }, [shuffledLetters]);
 
   const handleVolumeIconPress = () => {
     Tts.setDefaultLanguage("en-US"); // Set default language for text-to-speech
@@ -1046,18 +1564,23 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
   };
 
   const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
     }
-    return array;
+    return shuffledArray;
   };
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const item5 = progress;
-  const screenName = "alphabet";
+  const screenName = "number";
   useEffect(() => {
-    if (progress >= 9) {
+    if (progress > 9) {
+      Tts.stop();
       dispatch(setCompletedWriting({ item5, screenName }));
       navigation.navigate("dashboared");
     }
@@ -1066,7 +1589,7 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
     <View>
       <Header
         navigation={goBack}
-        title={"ALPHABET"}
+        title={title}
         backgroundColor={backgroundColor}
       />
 
@@ -1102,50 +1625,70 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
         </TouchableOpacity>
         <View style={styles.option}>
           {spokenWord && (
-            <Image
-              source={spokenWord?.image}
-              style={{ width: 50, height: 50 }}
-            />
+            <Text style={{ color: "#000", fontWeight: "bold", fontSize: 40 }}>
+              {spokenWord?.name}
+            </Text>
           )}
-          {/* <Text
-            style={{
-              color: "#000",
-              fontWeight: "bold",
-              fontSize: 50,
-              paddingVertical: 10,
-            }}
-          >
-            {spokenWord}
-          </Text> */}
         </View>
       </View>
 
+      <View style={[styles.textBox]}>
+        {spokenWord &&
+          spokenWord.title.split("").map((letter, index) => (
+            <View
+              key={index}
+              style={[styles.individualBox, { borderColor: borderColor }]}
+            >
+              <Text style={styles.textSelected}>
+                {selectedWord !== spokenWord?.title ? selectedWord[index] : ""}
+              </Text>
+            </View>
+          ))}
+      </View>
       <View
         style={[
-          styles.textBox,
-          { borderColor: selecteWord ? "green" : "gray" },
+          styles.mcqs,
+          {
+            marginTop: hp(2),
+          },
         ]}
       >
-        <Text style={styles.textSelected}>{selecteWord}</Text>
-      </View>
-      <View style={[styles.mcqs, { marginTop: hp(5) }]}>
         {shuffledOptions.map((option, index) => (
-          <TouchableOpacity
+          <View
             key={index}
             style={[
               styles.optionView,
-              { borderColor: "#c5473d", backgroundColor: "#e9594d", margin: 5 },
+              {
+                width: wp(90),
+                // margin: 5,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                flexWrap: "wrap",
+              },
               selectedOption === option && {
                 borderColor: option === spokenWord ? "" : "red",
               },
             ]}
-            onPress={() => handleOptionSelect(option)}
-            disabled={!spokenWord}
+            // onPress={() => handleOptionSelect(option)}
+            // disabled={!spokenWord}
           >
-            <Text style={[styles.optionTexts, { color: "#fff" }]}>
-              {selectedOption === option ? "" : option?.title}
-            </Text>
-          </TouchableOpacity>
+            {shuffledLetters.map((letter, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.spellingBox,
+                  { borderColor: "#c5473d", backgroundColor: "#e9594d" },
+                ]}
+                onPress={() => handleOptionSelect(letter, index)}
+                // disabled={!spokenWord} // Disable selection if no spoken word
+              >
+                <Text style={{ color: "#fff", fontSize: 20, padding: 10 }}>
+                  {letter}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         ))}
       </View>
     </View>
@@ -1153,6 +1696,16 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
 };
 
 const styles = StyleSheet.create({
+  spellingBox: {
+    width: wp(15),
+    alignItems: "center",
+    justifyContent: "flex-start",
+    backgroundColor: "#e9594d",
+    borderColor: "#c5473d",
+    margin: 5,
+    borderWidth: 4,
+    borderRadius: 10,
+  },
   optionBImage: {
     width: 50,
     height: 50,
@@ -1189,22 +1742,51 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
   },
+  optionSelectionViewMatching: {
+    width: wp(40),
+    height: hp(8),
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "orange",
+    borderWidth: 4,
+    borderColor: "#78290F",
+    borderRadius: 10,
+    margin: 5,
+  },
   optionSelectionText: {
     color: "#fff",
     fontSize: 20,
   },
+  //   textBox: {
+  //     alignItems: "center",
+  //     justifyContent: "center",
+  //     alignSelf: "center",
+  //     marginVertical: 10,
+  //     borderWidth: 4,
+  //     borderColor: "#ccc",
+  //     backgroundColor: "#fff",
+  //     elevation: 2,
+  //     borderRadius: 15,
+  //   },
   textBox: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10,
+    flexWrap: "wrap",
+  },
+  individualBox: {
     width: wp(10),
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "center",
-    marginVertical: 10,
-    borderWidth: 4,
+    margin: 5,
+    borderWidth: 2,
     borderColor: "#ccc",
     backgroundColor: "#fff",
     elevation: 2,
     borderRadius: 15,
   },
+
   textSelected: {
     color: "#000",
     fontWeight: "bold",
@@ -1218,16 +1800,16 @@ const styles = StyleSheet.create({
   optionView: {
     width: wp(15),
     padding: 2,
-    borderWidth: 4,
-    borderColor: "#78290F",
-    backgroundColor: "#BA5624",
+    // borderWidth: 4,
+    // borderColor: "#78290F",
+    // backgroundColor: "#BA5624",
     marginVertical: 9,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
   },
   container: {
-    width: wp(25),
+    // width: wp(25),
     padding: 10,
     borderWidth: 4,
     borderColor: "#ccc",

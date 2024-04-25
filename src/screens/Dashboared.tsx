@@ -15,11 +15,22 @@ import {
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSelector } from "react-redux";
 
 const Dashboared = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [dashboardData, setDashboardData] = useState([]);
+  const [completedVocabulariesData, setCompletedVocabulariesData] = useState(
+    []
+  );
+  const [completedListeningData, setCompletedListeninngData] = useState([]);
+  const [completedReadingData, setCompletedReadingData] = useState([]);
+  const [completedMemoryData, setCompletedMemoryData] = useState([]);
+  const [completedWritingData, setCompletedWritingData] = useState([]);
+  const [currentComponent, setCurrentComponent] = useState(null);
+
   const ArrayImages = [
     {
       image: require("../assets/images/abc.jpeg"),
@@ -206,27 +217,41 @@ const Dashboared = ({ navigation }) => {
   const completedVocabularies = useSelector(
     (state) => state.root.user.completedVocabularies
   );
-  console.log("completedVocabularies..........", completedVocabularies);
 
+  console.log("completedVocabularies", completedVocabularies);
   const completedListening = useSelector(
     (state) => state.root.user.completedListening
   );
-  console.log("completedListening//////..........", completedListening);
+  console.log("completedListening", completedListening);
 
   const completedReading = useSelector(
     (state) => state.root.user.completedReading
   );
-  console.log("completedReading.....//////..........", completedReading);
-
-  const completedWriting = useSelector(
-    (state) => state.root.user.completedWriting
-  );
-  console.log("completedWriting.....//////..........", completedWriting);
+  console.log("completedReading", completedReading);
 
   const completedMemory = useSelector(
     (state) => state.root.user.completedMemory
   );
-  console.log("completedWriting.....//////..........", completedMemory);
+  console.log("completedMemory", completedMemory);
+
+  const completedWriting = useSelector(
+    (state) => state.root.user.completedWriting
+  );
+  console.log("completedWriting", completedWriting);
+
+  useEffect(() => {
+    setCompletedVocabulariesData(completedVocabularies);
+    setCompletedListeninngData(completedListening);
+    setCompletedReadingData(completedReading);
+    setCompletedMemoryData(completedMemory);
+    setCompletedWritingData(completedWriting);
+  }, [
+    completedVocabularies,
+    completedListening,
+    completedReading,
+    completedMemory,
+    completedWriting,
+  ]);
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -239,36 +264,97 @@ const Dashboared = ({ navigation }) => {
   };
 
   const navigateToComponent = (screenName, componentName) => {
+    setCurrentComponent(screenName);
     closeModal();
     navigation.navigate(screenName, { component: componentName });
   };
 
+  const isAnyCompleted =
+    completedVocabulariesData?.some(
+      (vocab) => vocab.screenName === selectedItem?.screenName
+    ) &&
+    completedListeningData?.some(
+      (vocab) => vocab.screenName === selectedItem?.screenName
+    ) &&
+    completedReadingData?.some(
+      (vocab) => vocab.screenName === selectedItem?.screenName
+    ) &&
+    completedMemoryData?.some(
+      (vocab) => vocab.screenName === selectedItem?.screenName
+    ) &&
+    completedWritingData?.some(
+      (vocab) => vocab.screenName === selectedItem?.screenName
+    );
+
+  const starColor = isAnyCompleted ? "#ffbd01" : "#ccc";
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView>
         <View style={styles.container}>
-          {ArrayImages.map((item, index) => (
-            <View style={styles.item} key={index}>
-              <TouchableOpacity
-                onPress={() => openModal(item)}
-                style={styles.itemContainer}
-              >
-                <Image source={item.image} style={styles.image} />
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+          {ArrayImages.map((item, index) => {
+            const isCompleted =
+              completedVocabulariesData?.some(
+                (vocab) => vocab.screenName === item?.screenName
+              ) &&
+              completedListeningData?.some(
+                (vocab) => vocab.screenName === item?.screenName
+              ) &&
+              completedReadingData?.some(
+                (vocab) => vocab.screenName === item?.screenName
+              ) &&
+              completedMemoryData?.some(
+                (vocab) => vocab.screenName === item?.screenName
+              ) &&
+              completedWritingData?.some(
+                (vocab) => vocab.screenName === item?.screenName
+              );
+            return (
+              <View style={styles.item} key={index}>
+                <TouchableOpacity
+                  onPress={() => openModal(item)}
+                  style={[
+                    styles.itemContainer,
+                    {
+                      borderColor: isCompleted ? "#fbdb3a" : "#ccc",
+                    },
+                  ]}
                 >
-                  <AntDesign name="star" size={20} color="#ccc" />
-                  <AntDesign name="star" size={20} color="#ccc" />
-                  <AntDesign name="star" size={20} color="#ccc" />
-                </View>
-              </TouchableOpacity>
-              <Text style={styles.name}>{item.name}</Text>
-            </View>
-          ))}
+                  {isCompleted && (
+                    <View
+                      style={{ position: "absolute", right: -10, top: -10 }}
+                    >
+                      <Ionicons name="diamond" size={30} color={"#c7c7c7"} />
+                    </View>
+                  )}
+                  <Image source={item.image} style={styles.image} />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <AntDesign
+                      name="star"
+                      size={20}
+                      color={isCompleted ? "#ffbd01" : "#ccc"}
+                    />
+                    <AntDesign
+                      name="star"
+                      size={20}
+                      color={isCompleted ? "#ffbd01" : "#ccc"}
+                    />
+                    <AntDesign
+                      name="star"
+                      size={20}
+                      color={isCompleted ? "#ffbd01" : "#ccc"}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <Text style={styles.name}>{item.name}</Text>
+              </View>
+            );
+          })}
         </View>
       </ScrollView>
       <Modal
@@ -291,9 +377,9 @@ const Dashboared = ({ navigation }) => {
                   justifyContent: "center",
                 }}
               >
-                <AntDesign name="star" size={20} color="#ccc" />
-                <AntDesign name="star" size={20} color="#ccc" />
-                <AntDesign name="star" size={20} color="#ccc" />
+                <AntDesign name="star" size={20} color={starColor} />
+                <AntDesign name="star" size={20} color={starColor} />
+                <AntDesign name="star" size={20} color={starColor} />
               </View>
             </View>
             <Text style={styles.modalName}>{selectedItem?.name}</Text>
@@ -308,13 +394,16 @@ const Dashboared = ({ navigation }) => {
             >
               <FontAwesome5 name="book-reader" size={30} color="#fff" />
               <Text style={styles.buttonText}>Vocabulary</Text>
-              {completedVocabularies?.item &&
-              completedVocabularies?.screenName === selectedItem?.screenName ? (
-                <View style={[styles.checkIcon, { borderColor: "#007bff" }]}>
-                  <FontAwesome5 name="check" color={"#007bff"} size={30} />
-                </View>
-              ) : (
-                ""
+              {completedVocabulariesData?.map(
+                (vocab, index) =>
+                  vocab.screenName === selectedItem?.screenName && (
+                    <View
+                      key={index}
+                      style={[styles.checkIcon, { borderColor: "#007bff" }]}
+                    >
+                      <FontAwesome5 name="check" color={"#007bff"} size={30} />
+                    </View>
+                  )
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -328,13 +417,16 @@ const Dashboared = ({ navigation }) => {
             >
               <FontAwesome5 name="volume-up" size={30} color="#fff" />
               <Text style={styles.buttonText}>Listening</Text>
-              {completedListening?.item2 &&
-              completedListening?.screenName === selectedItem?.screenName ? (
-                <View style={[styles.checkIcon, { borderColor: "#28a745" }]}>
-                  <FontAwesome5 name="check" color={"#28a745"} size={30} />
-                </View>
-              ) : (
-                ""
+              {completedListeningData?.map(
+                (vocab, index) =>
+                  vocab.screenName === selectedItem?.screenName && (
+                    <View
+                      key={index}
+                      style={[styles.checkIcon, { borderColor: "#28a745" }]}
+                    >
+                      <FontAwesome5 name="check" color={"#28a745"} size={30} />
+                    </View>
+                  )
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -349,13 +441,16 @@ const Dashboared = ({ navigation }) => {
               <FontAwesome name="eye" size={30} color="#fff" />
 
               <Text style={styles.buttonText}>Reading</Text>
-              {completedReading?.item3 &&
-              completedReading?.screenName === selectedItem?.screenName ? (
-                <View style={[styles.checkIcon, { borderColor: "#FF69B4" }]}>
-                  <FontAwesome5 name="check" color={"#FF69B4"} size={30} />
-                </View>
-              ) : (
-                ""
+              {completedReadingData?.map(
+                (vocab, index) =>
+                  vocab.screenName === selectedItem?.screenName && (
+                    <View
+                      key={index}
+                      style={[styles.checkIcon, { borderColor: "#FF69B4" }]}
+                    >
+                      <FontAwesome5 name="check" color={"#FF69B4"} size={30} />
+                    </View>
+                  )
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -370,13 +465,17 @@ const Dashboared = ({ navigation }) => {
               <FontAwesome name="lightbulb-o" size={30} color="#fff" />
 
               <Text style={styles.buttonText}>Memory</Text>
-              {completedMemory?.item4 &&
-              completedMemory?.screenName === selectedItem?.screenName ? (
-                <View style={[styles.checkIcon, { borderColor: "#fd7e14" }]}>
-                  <FontAwesome5 name="check" color={"#fd7e14"} size={30} />
-                </View>
-              ) : (
-                ""
+
+              {completedMemoryData?.map(
+                (vocab, index) =>
+                  vocab.screenName === selectedItem?.screenName && (
+                    <View
+                      key={index}
+                      style={[styles.checkIcon, { borderColor: "#fd7e14" }]}
+                    >
+                      <FontAwesome5 name="check" color={"#fd7e14"} size={30} />
+                    </View>
+                  )
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -391,13 +490,16 @@ const Dashboared = ({ navigation }) => {
               <FontAwesome name="pencil" size={30} color="#fff" />
 
               <Text style={styles.buttonText}>Writing</Text>
-              {completedWriting?.item5 &&
-              completedWriting?.screenName === selectedItem?.screenName ? (
-                <View style={[styles.checkIcon, { borderColor: "#dc3545" }]}>
-                  <FontAwesome5 name="check" color={"#dc3545"} size={30} />
-                </View>
-              ) : (
-                ""
+              {completedWritingData?.map(
+                (vocab, index) =>
+                  vocab.screenName === selectedItem?.screenName && (
+                    <View
+                      key={index}
+                      style={[styles.checkIcon, { borderColor: "#dc3545" }]}
+                    >
+                      <FontAwesome5 name="check" color={"#dc3545"} size={30} />
+                    </View>
+                  )
               )}
             </TouchableOpacity>
           </View>

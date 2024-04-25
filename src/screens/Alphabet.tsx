@@ -52,7 +52,7 @@ const Alphabet = ({ route, navigation }: any) => {
         return (
           <Memory
             goBack={() => navigation.goBack()}
-            backgroundColor="#fd7e14"
+            backgroundColor="#e98f00"
           />
         );
       case "_Writing":
