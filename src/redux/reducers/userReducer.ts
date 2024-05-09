@@ -8,6 +8,8 @@ interface State {
   completedReading: string[];
   completedMemory: string[];
   completedWriting: string[];
+  name : string;
+  image : {};
 
 }
 
@@ -17,6 +19,8 @@ const initialState: State = {
   completedReading: [],
   completedMemory: [],
   completedWriting: [],
+  name : '',
+  image : {},
 
 };
 
@@ -49,11 +53,19 @@ export const userReducer = createSlice({
       const updatedCompletedWriting = [...state.completedWriting, action.payload];
       return { ...state, completedWriting: updatedCompletedWriting };
     },
+    setName : (state, action) => {
+      console.log('UserPaylod setName  ...     ',action.payload)
+      state.name = action.payload;
+    },
+    setImage : (state, action) => {
+      console.log('UserPaylod setImage  ...     ',action.payload)
+      state.image = action.payload;
+    }
    
   },
 });
 
-export const {setCompletedVocabulary,setCompletedListening,setCompletedReading,setCompletedMemory,setCompletedWriting
+export const {setCompletedVocabulary,setCompletedListening,setCompletedReading,setCompletedMemory,setCompletedWriting,setName,setImage
 } = userReducer.actions;
 
 export default userReducer.reducer;

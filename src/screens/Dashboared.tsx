@@ -17,6 +17,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSelector } from "react-redux";
+import { HomeHeader } from "../components/homeHeader";
 
 const Dashboared = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -180,7 +181,7 @@ const Dashboared = ({ navigation }) => {
     {
       image: require("../assets/images/angle.jpeg"),
       name: "FORMEN",
-      screenName: "toform",
+      screenName: "tofarm",
     },
     {
       image: require("../assets/images/arrow.jpeg"),
@@ -289,6 +290,7 @@ const Dashboared = ({ navigation }) => {
   const starColor = isAnyCompleted ? "#ffbd01" : "#ccc";
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <HomeHeader navigation={undefined} />
       <ScrollView>
         <View style={styles.container}>
           {ArrayImages.map((item, index) => {
