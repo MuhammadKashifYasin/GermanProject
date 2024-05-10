@@ -111,7 +111,7 @@ export const Vocabulary = ({ goBack, backgroundColor, title }) => {
       title: "TANZEN",
     },
     {
-      name: require("../assets/verbs/traumen.png"),
+      name: require("../assets/verbs/traumen.jpeg"),
       title: "TRÄUMEN",
     },
   ];
@@ -342,7 +342,7 @@ export const Listening = ({ goBack, backgroundColor, title }) => {
       title: "TANZEN",
     },
     {
-      name: require("../assets/verbs/traumen.png"),
+      name: require("../assets/verbs/traumen.jpeg"),
       title: "TRÄUMEN",
     },
   ];
@@ -574,7 +574,7 @@ export const Reading = ({ goBack, backgroundColor, title }) => {
       title: "TANZEN",
     },
     {
-      image: require("../assets/verbs/traumen.png"),
+      image: require("../assets/verbs/traumen.jpeg"),
       title: "TRÄUMEN",
     },
   ];
@@ -817,7 +817,7 @@ export const Memory = ({ goBack, backgroundColor, title }) => {
       title: "TANZEN",
     },
     {
-      image: require("../assets/verbs/traumen.png"),
+      image: require("../assets/verbs/traumen.jpeg"),
       title: "TRÄUMEN",
     },
   ];
@@ -1097,7 +1097,7 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
       title: "TANZEN",
     },
     {
-      image: require("../assets/verbs/traumen.png"),
+      image: require("../assets/verbs/traumen.jpeg"),
       title: "TRÄUMEN",
     },
   ];
