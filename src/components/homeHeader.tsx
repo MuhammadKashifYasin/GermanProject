@@ -26,8 +26,8 @@ export const HomeHeader = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [userDetailModalVisible, setUserDetailModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [name, setName] = useState("");
+  // const [selectedImage, setSelectedImage] = useState(null);
+  // const [name, setName] = useState("");
 
   const closeModal = () => {
     setModalVisible(false);
@@ -98,40 +98,66 @@ export const HomeHeader = ({ navigation }) => {
 
   const ProfileImages = ({ onSubmit }) => {
     const dispatch = useDispatch();
+    const getUserName = useSelector((state) => state.root.user.name);
+    const getUserImage = useSelector((state) => state.root.user.image);
+
+    console.log("getUserName,,,,........", getUserName);
+    console.log("getUserImage.......", getUserImage);
+
     const [text, setText] = useState("");
+    const [selectedImage, setSelectedImage] = useState(null);
 
     const handleSubmit = () => {
-      if (onSubmit) {
-        onSubmit(text); // Pass the entered text to the parent component only if onSubmit is defined
-        setText(""); // Clear the text input after submission
-      } // Clear the text input after submission
+      dispatch(setName(text)); // Dispatch user input name
+      dispatch(setImage(selectedImage)); // Dispatch selected image
+      setUserDetailModalVisible(false);
+      setText(""); // Clear text after dispatching
+      console.log("OK button pressed. Selected image:", selectedImage);
     };
 
     return (
       <View>
-        <View style={styles.userStyles}>
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={
-              selectedImage || require("../assets/headerImages/user3.png")
-            }
-          />
-          <View style={{ marginLeft: wp(3), justifyContent: "center" }}>
+        <View style={[styles.userStyles]}>
+          <View
+            style={{
+              width: wp(20),
+              // justifyContent: "center",
+              alignItems: "flex-end",
+              marginHorizontal: wp(3),
+            }}
+          >
+            <Image
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+              source={
+                getUserImage
+                  ? selectedImage || getUserImage
+                  : require("../assets/headerImages/user3.png")
+              }
+            />
+          </View>
+          <View style={{ width: wp(40) }}>
             <View style={styles.inputFeild}>
               <TextInput
-                placeholder="USER"
+                placeholder={getUserName ? getUserName : "USER"}
                 placeholderTextColor="#000"
                 maxLength={15}
                 value={text}
                 onChangeText={(inputText) => setText(inputText)}
-                onSubmitEditing={handleSubmit} // Call handleSubmit when the user submits the input
               />
             </View>
             <Text>Max 15</Text>
           </View>
-          <TouchableOpacity onPress={handleSubmit} style={styles.okButton}>
-            <Text style={styles.okText}>OK</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              width: wp(20),
+              // justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity onPress={handleSubmit} style={styles.okButton}>
+              <Text style={styles.okText}>OK</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={{
@@ -159,25 +185,55 @@ export const HomeHeader = ({ navigation }) => {
   };
 
   const UserDetailComponent = () => {
+    const getUserName = useSelector((state) => state.root.user.name);
+    const getUserImage = useSelector((state) => state.root.user.image);
+
+    console.log("getUserName,,,,..///////......", getUserName);
+    console.log("getUserImage....|||||||||||||...", getUserImage);
     return (
       <View>
         <View style={styles.userDetail}>
           <TouchableOpacity
             onPress={openUserDetailModal}
-            style={styles.userStyle}
+            style={[
+              styles.userStyle,
+              {
+                width: wp(30),
+                alignItems: "flex-end",
+                justifyContent: "flex-end",
+                marginHorizontal: wp(2),
+              },
+            ]}
           >
             <Image
               style={{ width: 50, height: 50, borderRadius: 25 }}
-              source={require("../assets/headerImages/user3.png")}
+              source={
+                getUserImage
+                  ? getUserImage
+                  : require("../assets/headerImages/user3.png")
+              }
             />
           </TouchableOpacity>
-          <Text style={styles.userName}>{name || "USER"}</Text>
-          <Octicons
-            style={styles.pencilStyle}
-            name="pencil"
-            size={30}
-            color="#000"
-          />
+          <View style={{ width: wp(40) }}>
+            <Text style={[styles.userName, { fontSize: 20 }]}>
+              {getUserName ? getUserName : "USER"}
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={openUserDetailModal}
+            style={{
+              width: wp(10),
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Octicons
+              style={styles.pencilStyle}
+              name="pencil"
+              size={30}
+              color="#000"
+            />
+          </TouchableOpacity>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Bar
@@ -292,6 +348,12 @@ export const HomeHeader = ({ navigation }) => {
     );
   };
 
+  const getUserName = useSelector((state) => state.root.user.name);
+  const getUserImage = useSelector((state) => state.root.user.image);
+
+  console.log("getUserName,,,,..///////......", getUserName);
+  console.log("getUserImage....|||||||||||||...", getUserImage);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={navigation}>
@@ -305,11 +367,17 @@ export const HomeHeader = ({ navigation }) => {
         >
           <Image
             style={{ width: 50, height: 50, borderRadius: 25 }}
-            source={require("../assets/headerImages/user3.png")}
+            source={
+              getUserImage
+                ? getUserImage
+                : require("../assets/headerImages/user3.png")
+            }
           />
         </TouchableOpacity>
         <View>
-          <Text style={{ color: "#fff" }}>USER</Text>
+          <Text style={{ color: "#fff" }}>
+            {getUserName ? getUserName : "USER"}
+          </Text>
           <View style={{ flexDirection: "row" }}>
             <AntDesign
               style={styles.iconStyle}
@@ -366,11 +434,12 @@ const styles = StyleSheet.create({
   okButton: {
     width: 50,
     height: 50,
-    backgroundColor: "pink",
-    borderRadius: 10,
+    backgroundColor: "#1a73e8",
+    borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 4,
+    borderColor: "#fff",
     elevation: 4,
   },
   okText: {
@@ -480,9 +549,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   inputFeild: {
-    borderWidth: wp(0.5),
+    borderWidth: 0.5,
     borderColor: "#000",
     color: "#000",
+    backgroundColor: "#ccc",
+    opacity: 0.5,
+    borderRadius: 20,
+    paddingHorizontal: 5,
   },
   usersData: {
     flexDirection: "row",

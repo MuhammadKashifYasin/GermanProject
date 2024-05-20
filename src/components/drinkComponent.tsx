@@ -171,7 +171,7 @@ export const Vocabulary = ({ goBack, backgroundColor, title }) => {
     }
   }, [itemsPressed]);
   return (
-    <View style={{ flex: 1, marginBottom: hp(15) }}>
+    <View style={{ flex: 1, marginBottom: hp(16) }}>
       <Header
         navigation={goBack}
         title={title}
@@ -1400,7 +1400,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    // width: wp(25),
+    width: wp(40),
+    height: hp(30),
     padding: 10,
     borderWidth: 4,
     borderColor: "#ccc",
@@ -1408,7 +1409,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   item: {
     width: wp(100),
