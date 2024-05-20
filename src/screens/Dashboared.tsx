@@ -18,6 +18,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSelector } from "react-redux";
 import { HomeHeader } from "../components/homeHeader";
+import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
 
 const Dashboared = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -270,28 +271,60 @@ const Dashboared = ({ navigation }) => {
     navigation.navigate(screenName, { component: componentName });
   };
 
-  const isAnyCompleted =
-    completedVocabulariesData?.some(
-      (vocab) => vocab.screenName === selectedItem?.screenName
-    ) &&
-    completedListeningData?.some(
-      (vocab) => vocab.screenName === selectedItem?.screenName
-    ) &&
-    completedReadingData?.some(
-      (vocab) => vocab.screenName === selectedItem?.screenName
-    ) &&
-    completedMemoryData?.some(
-      (vocab) => vocab.screenName === selectedItem?.screenName
-    ) &&
-    completedWritingData?.some(
-      (vocab) => vocab.screenName === selectedItem?.screenName
-    );
+  // const isAnyCompleted =
+  //   completedVocabulariesData?.some(
+  //     (vocab) => vocab.screenName === selectedItem?.screenName
+  //   ) &&
+  //   completedListeningData?.some(
+  //     (vocab) => vocab.screenName === selectedItem?.screenName
+  //   ) &&
+  //   completedReadingData?.some(
+  //     (vocab) => vocab.screenName === selectedItem?.screenName
+  //   ) &&
+  //   completedMemoryData?.some(
+  //     (vocab) => vocab.screenName === selectedItem?.screenName
+  //   ) &&
+  //   completedWritingData?.some(
+  //     (vocab) => vocab.screenName === selectedItem?.screenName
+  //   );
 
-  const starColor = isAnyCompleted ? "#ffbd01" : "#ccc";
+  // const starColor = isAnyCompleted ? "#ffbd01" : "#ccc";
+
+  const calculateStarRating = (screenName) => {
+    let totalCompletedCount = 0;
+
+    const vocabulariesCompletedCount = completedVocabulariesData.filter(
+      (vocab) => vocab.screenName === screenName
+    ).length;
+    const listeningCompletedCount = completedListeningData.filter(
+      (vocab) => vocab.screenName === screenName
+    ).length;
+    const readingCompletedCount = completedReadingData.filter(
+      (vocab) => vocab.screenName === screenName
+    ).length;
+    const memoryCompletedCount = completedMemoryData.filter(
+      (vocab) => vocab.screenName === screenName
+    ).length;
+    const writingCompletedCount = completedWritingData.filter(
+      (vocab) => vocab.screenName === screenName
+    ).length;
+
+    // Calculate total completed count
+    totalCompletedCount =
+      vocabulariesCompletedCount +
+      listeningCompletedCount +
+      readingCompletedCount +
+      memoryCompletedCount +
+      writingCompletedCount;
+
+    // Divide by 3 to represent the stars
+    return totalCompletedCount / 3;
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <HomeHeader navigation={undefined} />
-      <ScrollView>
+      {/* <ScrollView>
         <View style={styles.container}>
           {ArrayImages.map((item, index) => {
             const isCompleted =
@@ -358,6 +391,38 @@ const Dashboared = ({ navigation }) => {
             );
           })}
         </View>
+      </ScrollView> */}
+      <ScrollView>
+        <View style={styles.container}>
+          {ArrayImages.map((item, index) => {
+            const completedCount = calculateStarRating(item.screenName);
+            return (
+              <View style={styles.item} key={index}>
+                <TouchableOpacity
+                  onPress={() => openModal(item)}
+                  style={[
+                    styles.itemContainer,
+                    {
+                      borderColor: completedCount ? "#fbdb3a" : "#ccc",
+                    },
+                  ]}
+                >
+                  <Image source={item.image} style={styles.image} />
+                  <StarRating
+                    rating={completedCount}
+                    maxStars={3}
+                    color={completedCount ? "#fdd835" : "#ccc"}
+                    onChange={(newRating) => {
+                      // Handle the change in rating here
+                      console.log("New rating:", newRating);
+                    }}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.name}>{item.name}</Text>
+              </View>
+            );
+          })}
+        </View>
       </ScrollView>
       <Modal
         animationType="slide"
@@ -379,9 +444,10 @@ const Dashboared = ({ navigation }) => {
                   justifyContent: "center",
                 }}
               >
-                <AntDesign name="star" size={20} color={starColor} />
-                <AntDesign name="star" size={20} color={starColor} />
-                <AntDesign name="star" size={20} color={starColor} />
+                <StarRating
+                  rating={calculateStarRating(selectedItem?.screenName)}
+                  maxStars={3}
+                />
               </View>
             </View>
             <Text style={styles.modalName}>{selectedItem?.name}</Text>
