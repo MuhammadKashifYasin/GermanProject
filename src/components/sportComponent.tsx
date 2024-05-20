@@ -33,6 +33,7 @@ export const Vocabulary = ({ goBack, backgroundColor, title }) => {
   const [pressedIndices, setPressedIndices] = useState([]);
   const [modal, setModal] = useState(false);
   const [allLettersCompleted, setAllLettersCompleted] = useState(false);
+  const [showModalCheckIcon, setShowModalCheckIcon] = useState(false);
   const data = [
     {
       name: require("../assets/sportImages/fussball.jpeg"),
@@ -153,7 +154,8 @@ export const Vocabulary = ({ goBack, backgroundColor, title }) => {
   useEffect(() => {
     if (itemsPressed === 15) {
       setTimeout(() => {
-        navigation.navigate("dashboared");
+        // navigation.navigate("dashboared");
+        setShowModalCheckIcon(true);
       }, 2000);
     }
   }, [itemsPressed]);
@@ -231,6 +233,37 @@ export const Vocabulary = ({ goBack, backgroundColor, title }) => {
           </ScrollView>
         </View>
       )}
+       <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModalCheckIcon}
+        onRequestClose={() => {
+          setShowModalCheckIcon(!showModalCheckIcon);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={{ fontSize: 20, color: "#000", margin: 10 }}>
+              Congratulations
+            </Text>
+            <Image
+              source={require("../assets/images/check.png")}
+              style={{ width: 100, height: 100, margin: 10 }}
+            />
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "flex-end",
+                margin: 10,
+              }}
+              onPress={() => navigation.navigate("dashboared")}
+            >
+              <Text style={{ color: "#000", fontSize: 30 }}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -243,6 +276,7 @@ export const Listening = ({ goBack, backgroundColor, title }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [spokenWord, setSpokenWord] = useState(null);
   const [shuffledImages, setShuffledImages] = useState([]);
+  const [showModalCheckIcon, setShowModalCheckIcon] = useState(false);
 
   const imagesWithTitles = [
     {
@@ -384,7 +418,8 @@ export const Listening = ({ goBack, backgroundColor, title }) => {
       Tts.stop();
       dispatch(setCompletedListening({ item2, screenName }));
       setTimeout(() => {
-        navigation.navigate("dashboared");
+        // navigation.navigate("dashboared");
+        setShowModalCheckIcon(true);
       });
     }
   }, [progress]);
@@ -442,6 +477,37 @@ export const Listening = ({ goBack, backgroundColor, title }) => {
           </TouchableOpacity>
         ))}
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModalCheckIcon}
+        onRequestClose={() => {
+          setShowModalCheckIcon(!showModalCheckIcon);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={{ fontSize: 20, color: "#000", margin: 10 }}>
+              Congratulations
+            </Text>
+            <Image
+              source={require("../assets/images/check.png")}
+              style={{ width: 100, height: 100, margin: 10 }}
+            />
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "flex-end",
+                margin: 10,
+              }}
+              onPress={() => navigation.navigate("dashboared")}
+            >
+              <Text style={{ color: "#000", fontSize: 30 }}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -455,6 +521,7 @@ export const Reading = ({ goBack, backgroundColor, title }) => {
   const [showModal, setShowModal] = useState(false);
   const [spokenWord, setSpokenWord] = useState(null);
   const [shuffledOptions, setShuffledOptions] = useState([]);
+  const [showModalCheckIcon, setShowModalCheckIcon] = useState(false);
 
   const options = [
     {
@@ -577,7 +644,8 @@ export const Reading = ({ goBack, backgroundColor, title }) => {
       Tts.stop();
       dispatch(setCompletedReading({ item3, screenName }));
       setTimeout(() => {
-        navigation.navigate("dashboared");
+        // navigation.navigate("dashboared");
+        setShowModalCheckIcon(true);
       }, 1500);
     }
   });
@@ -626,6 +694,37 @@ export const Reading = ({ goBack, backgroundColor, title }) => {
           </TouchableOpacity>
         ))}
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModalCheckIcon}
+        onRequestClose={() => {
+          setShowModalCheckIcon(!showModalCheckIcon);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={{ fontSize: 20, color: "#000", margin: 10 }}>
+              Congratulations
+            </Text>
+            <Image
+              source={require("../assets/images/check.png")}
+              style={{ width: 100, height: 100, margin: 10 }}
+            />
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "flex-end",
+                margin: 10,
+              }}
+              onPress={() => navigation.navigate("dashboared")}
+            >
+              <Text style={{ color: "#000", fontSize: 30 }}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -639,6 +738,7 @@ export const Memory = ({ goBack, backgroundColor, title }) => {
   const [selectedUpperWord, setSelectedUpperWord] = useState("");
   const [selectedWordArray, setSelectedWordArray] = useState([]);
   const [shuffledOnce, setShuffledOnce] = useState(false);
+  const [showModalCheckIcon, setShowModalCheckIcon] = useState(false);
 
   const options = [
     "FUSSBALL",
@@ -800,7 +900,8 @@ export const Memory = ({ goBack, backgroundColor, title }) => {
 
   useEffect(() => {
     if (progress === 12) {
-      navigation.navigate("dashboared"); // Ensure correct spelling
+      // navigation.navigate("dashboared"); // Ensure correct spelling
+      setShowModalCheckIcon(true);
     }
   }, [progress, navigation]);
 
@@ -900,6 +1001,37 @@ export const Memory = ({ goBack, backgroundColor, title }) => {
           })}
         </View>
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModalCheckIcon}
+        onRequestClose={() => {
+          setShowModalCheckIcon(!showModalCheckIcon);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={{ fontSize: 20, color: "#000", margin: 10 }}>
+              Congratulations
+            </Text>
+            <Image
+              source={require("../assets/images/check.png")}
+              style={{ width: 100, height: 100, margin: 10 }}
+            />
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "flex-end",
+                margin: 10,
+              }}
+              onPress={() => navigation.navigate("dashboared")}
+            >
+              <Text style={{ color: "#000", fontSize: 30 }}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -917,6 +1049,8 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
   console.log("🚀 ~ Writing ~ shuffledLetters:", shuffledLetters);
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [borderColor, setBorderColor] = useState("gray");
+  const [showModalCheckIcon, setShowModalCheckIcon] = useState(false);
+
 
   const options = [
     {
@@ -1101,7 +1235,8 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
     if (progress > 9) {
       Tts.stop();
       dispatch(setCompletedWriting({ item5, screenName }));
-      navigation.navigate("dashboared");
+      // navigation.navigate("dashboared");
+      setShowModalCheckIcon(true);
     }
   });
   return (
@@ -1214,6 +1349,37 @@ export const Writing = ({ goBack, backgroundColor, title }) => {
           </View>
         ))}
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModalCheckIcon}
+        onRequestClose={() => {
+          setShowModalCheckIcon(!showModalCheckIcon);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={{ fontSize: 20, color: "#000", margin: 10 }}>
+              Congratulations
+            </Text>
+            <Image
+              source={require("../assets/images/check.png")}
+              style={{ width: 100, height: 100, margin: 10 }}
+            />
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "flex-end",
+                margin: 10,
+              }}
+              onPress={() => navigation.navigate("dashboared")}
+            >
+              <Text style={{ color: "#000", fontSize: 30 }}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -1436,5 +1602,20 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#000",
     fontWeight: "bold",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: wp(70),
+    // height: hp(45),
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    elevation: 5,
   },
 });

@@ -6,7 +6,7 @@ import {
   Image,
   StyleSheet,
   Modal,
-  TextInput,
+  TextInput, 
   FlatList,
 } from "react-native";
 import {
