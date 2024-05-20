@@ -1,52 +1,52 @@
-import React from 'react';
-import {Text, View} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
-import Alphabet from '../screens/Alphabet';
-import Numbers from '../screens/Number';
-import Colors from '../screens/colors';
-import FastFood from '../screens/FastFood';
-import Vegetables from '../screens/Vegetables';
-import Fruits from '../screens/Fruits';
-import DrinksAndDesserts from '../screens/DrinksAndDesserts';
-import Transport from '../screens/Transport';
-import Verbs from '../screens/verbs';
-import Body from '../screens/body';
-import WildAnimals from '../screens/wildAnimals';
-import FarmAnimals from '../screens/farmAnimals';
-import SeaAnimals from '../screens/seaAnimals';
-import Pets from '../screens/pets';
-import Insects from '../screens/insects';
-import WeekDays from '../screens/weekDays';
-import MonthAndSeasons from '../screens/monthAndSeason';
-import Clothing from '../screens/clothing';
-import School from '../screens/school';
-import Music from '../screens/music';
-import Weather from '../screens/weather';
-import Cities from '../screens/city';
-import LivingRoom from '../screens/livingRoom';
-import BedRoom from '../screens/bedroom';
-import BathRoom from '../screens/bathRoom';
-import Kitchen from '../screens/kichen';
-import Holidays from '../screens/holidays';
-import Sports from '../screens/sports';
-import NaturalLandScapes from '../screens/naturalLandScapes';
-import ToForm from '../screens/toForm';
-import Opposites from '../screens/opposites';
-import Technology from '../screens/technology';
-import ElectricAppliances from '../screens/electricalAppliances';
-import SpaceTravel from '../screens/spaceTravel';
-import Christmas from '../screens/christmas';
-import Halloween from '../screens/halloween';
-import start from '../screens/start';
-import Start from '../screens/start';
-import Dashboared from '../screens/Dashboared';
+import React from "react";
+import { Text, View } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Alphabet from "../screens/Alphabet";
+import Numbers from "../screens/Number";
+import Colors from "../screens/colors";
+import FastFood from "../screens/FastFood";
+import Vegetables from "../screens/Vegetables";
+import Fruits from "../screens/Fruits";
+import DrinksAndDesserts from "../screens/DrinksAndDesserts";
+import Transport from "../screens/Transport";
+import Verbs from "../screens/verbs";
+import Body from "../screens/body";
+import WildAnimals from "../screens/wildAnimals";
+import FarmAnimals from "../screens/farmAnimals";
+import SeaAnimals from "../screens/seaAnimals";
+import Pets from "../screens/pets";
+import Insects from "../screens/insects";
+import WeekDays from "../screens/weekDays";
+import MonthAndSeasons from "../screens/monthAndSeason";
+import Clothing from "../screens/clothing";
+import School from "../screens/school";
+import Music from "../screens/music";
+import Weather from "../screens/weather";
+import Cities from "../screens/city";
+import LivingRoom from "../screens/livingRoom";
+import BedRoom from "../screens/bedroom";
+import BathRoom from "../screens/bathRoom";
+import Kitchen from "../screens/kichen";
+import Holidays from "../screens/holidays";
+import Sports from "../screens/sports";
+import NaturalLandScapes from "../screens/naturalLandScapes";
+import ToForm from "../screens/toForm";
+import Opposites from "../screens/opposites";
+import Technology from "../screens/technology";
+import ElectricAppliances from "../screens/electricalAppliances";
+import SpaceTravel from "../screens/spaceTravel";
+import Christmas from "../screens/christmas";
+import Halloween from "../screens/halloween";
+import Dashboared from "../screens/Dashboared";
+import Start from "../screens/start";
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="start"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="start" component={Start} />
       <Stack.Screen name="dashboared" component={Dashboared} />
       <Stack.Screen name="alphabet" component={Alphabet} />

@@ -10,6 +10,7 @@ interface State {
   completedWriting: string[];
   name : string;
   image : {};
+  // star :string[]
 
 }
 
@@ -21,7 +22,7 @@ const initialState: State = {
   completedWriting: [],
   name : '',
   image : {},
-
+// star:[]
 };
 
 export const userReducer = createSlice({
@@ -60,12 +61,19 @@ export const userReducer = createSlice({
     setImage : (state, action) => {
       console.log('UserPaylod setImage  ...     ',action.payload)
       state.image = action.payload;
-    }
+    },
+    //   setStar: (state, action) => {
+    //     console.log('UserPaylod star  ...     ', action.payload);
+    //     const starArray = state.star || []; // Handle undefined case
+    //     const updatedStar = [...starArray, action.payload];
+    //     return { ...state, star: updatedStar };
+    // }
    
   },
 });
 
-export const {setCompletedVocabulary,setCompletedListening,setCompletedReading,setCompletedMemory,setCompletedWriting,setName,setImage
+export const {setCompletedVocabulary,setCompletedListening,setCompletedReading,setCompletedMemory,setCompletedWriting,setName,setImage,
+  // setStar
 } = userReducer.actions;
 
 export default userReducer.reducer;
@@ -74,33 +82,3 @@ export default userReducer.reducer;
 
 
 
-
-
-
-
-
-
-
-
-// setCompletedVocabularyNumber,setCompletedListeningNumber,setCompletedReadingNumber,setCompletedMemoryNumber,setCompletedWritingNumber
-
-// setCompletedVocabularyNumber: (state, action) => {
-//   console.log('UserPaylod   setCompletedVocabularyNumber...     ',action.payload)
-//   state.completedVocabulariesNumber = action.payload;
-// },
-// setCompletedListeningNumber: (state, action) => {
-//   console.log('UserPaylod   setCompletedListeningNumber...     ',action.payload)
-//   state.completedListeningNumber = action.payload;
-// },
-// setCompletedReadingNumber: (state, action) => {
-//   console.log('UserPaylod   setCompletedReadingNumber...     ',action.payload)
-//   state.completedReadingNumber = action.payload;
-// },
-// setCompletedMemoryNumber: (state, action) => {
-//   console.log('UserPaylod   setCompletedMemoryNumber...     ',action.payload)
-//   state.completedMemoryNumber = action.payload;
-// },
-// setCompletedWritingNumber: (state, action) => {
-//   console.log('UserPaylod setCompletedWritingNumber  ...     ',action.payload)
-//   state.completedWritingNumber = action.payload;
-// },

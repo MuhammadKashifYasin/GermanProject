@@ -19,25 +19,26 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Bar } from "react-native-progress";
-import { setImage, setName } from "../redux/reducers/userReducer";
+import { setImage, setName, setStar } from "../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 export const HomeHeader = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [userDetailModalVisible, setUserDetailModalVisible] = useState(false);
+  // const [starLength, setStarLength] = useState();
   // const [selectedImage, setSelectedImage] = useState(null);
   // const [name, setName] = useState("");
 
-  const closeModal = () => {
-    setModalVisible(false);
-    setSelectedItem(null);
-    setUserDetailModalVisible(false);
-  };
+  // const closeModal = () => {
+  //   setModalVisible(false);
+  //   setSelectedItem(null);
+  //   setUserDetailModalVisible(false);
+  // };
 
-  const openUserDetailModal = () => {
-    setUserDetailModalVisible(true);
-  };
+  // const openUserDetailModal = () => {
+  //   setUserDetailModalVisible(true);
+  // };
 
   const arr = [
     {
@@ -87,15 +88,6 @@ export const HomeHeader = ({ navigation }) => {
     },
   ];
 
-  // const getImage = (state) => {
-  //   state.root.user.image;
-  // };
-  // const getName = (state) => {
-  //   state.root.user.name;
-  // };
-
-  // console.log("getNameAndImage", getImage, getName);
-
   const ProfileImages = ({ onSubmit }) => {
     const dispatch = useDispatch();
     const getUserName = useSelector((state) => state.root.user.name);
@@ -110,7 +102,7 @@ export const HomeHeader = ({ navigation }) => {
     const handleSubmit = () => {
       dispatch(setName(text)); // Dispatch user input name
       dispatch(setImage(selectedImage)); // Dispatch selected image
-      setUserDetailModalVisible(false);
+      setModalVisible(false);
       setText(""); // Clear text after dispatching
       console.log("OK button pressed. Selected image:", selectedImage);
     };
@@ -184,169 +176,169 @@ export const HomeHeader = ({ navigation }) => {
     );
   };
 
-  const UserDetailComponent = () => {
-    const getUserName = useSelector((state) => state.root.user.name);
-    const getUserImage = useSelector((state) => state.root.user.image);
+  // const UserDetailComponent = () => {
+  //   const getUserName = useSelector((state) => state.root.user.name);
+  //   const getUserImage = useSelector((state) => state.root.user.image);
 
-    console.log("getUserName,,,,..///////......", getUserName);
-    console.log("getUserImage....|||||||||||||...", getUserImage);
-    return (
-      <View>
-        <View style={styles.userDetail}>
-          <TouchableOpacity
-            onPress={openUserDetailModal}
-            style={[
-              styles.userStyle,
-              {
-                width: wp(30),
-                alignItems: "flex-end",
-                justifyContent: "flex-end",
-                marginHorizontal: wp(2),
-              },
-            ]}
-          >
-            <Image
-              style={{ width: 50, height: 50, borderRadius: 25 }}
-              source={
-                getUserImage
-                  ? getUserImage
-                  : require("../assets/headerImages/user3.png")
-              }
-            />
-          </TouchableOpacity>
-          <View style={{ width: wp(40) }}>
-            <Text style={[styles.userName, { fontSize: 20 }]}>
-              {getUserName ? getUserName : "USER"}
-            </Text>
-          </View>
-          <TouchableOpacity
-            onPress={openUserDetailModal}
-            style={{
-              width: wp(10),
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Octicons
-              style={styles.pencilStyle}
-              name="pencil"
-              size={30}
-              color="#000"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Bar
-            progress={1}
-            width={wp(45)}
-            height={hp(5)}
-            color="#d3d3d2"
-            borderRadius={10}
-            style={{ marginVertical: 10 }}
-          />
-          <Image
-            style={styles.applogoStyle}
-            source={require("../assets/headerImages/applogo1.jpg")}
-          />
-          <Text style={styles.barText}>0%</Text>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Bar
-            progress={1}
-            width={wp(40)}
-            height={hp(5)}
-            color="#f5d742"
-            borderRadius={10}
-            style={{ marginVertical: 10 }}
-          />
-          <AntDesign
-            style={styles.ratingIcon}
-            name="star"
-            size={40}
-            color="#f99700"
-          />
-          <Text style={styles.barText}>0/108</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: hp(3),
-          }}
-        >
-          <Bar
-            progress={1}
-            width={wp(40)}
-            height={hp(5)}
-            color="#f5a4ea"
-            borderRadius={10}
-            style={{ marginVertical: 10 }}
-          />
-          <Ionicons
-            style={styles.ratingIcon}
-            name="diamond-outline"
-            size={40}
-            color="#f154a5"
-          />
-          <Text style={styles.barText}>0/36</Text>
-        </View>
-        <View style={styles.prize}>
-          <Text style={styles.level1Text}>LEVEL 1</Text>
-          <MaterialCommunityIcons
-            style={styles.ratingIcon}
-            name="trophy"
-            size={70}
-            color="#fcc48f"
-          />
-          <Ionicons
-            style={styles.ratingIcon}
-            name="diamond-outline"
-            size={70}
-            color="#fcc48f"
-          />
-        </View>
-        <View style={styles.prize}>
-          <Text style={styles.level2Text}>LEVEL 2</Text>
-          <MaterialCommunityIcons
-            style={styles.ratingIcon}
-            name="trophy"
-            size={70}
-            color="#aaaaaa"
-          />
-          <Ionicons
-            style={styles.ratingIcon}
-            name="diamond-outline"
-            size={70}
-            color="#aaaaaa"
-          />
-        </View>
-        <View style={styles.prize}>
-          <Text style={styles.level3Text}>LEVEL 3</Text>
-          <MaterialCommunityIcons
-            style={styles.ratingIcon}
-            name="trophy"
-            size={70}
-            color="#f4d03f"
-          />
-          <Ionicons
-            style={styles.ratingIcon}
-            name="diamond-outline"
-            size={70}
-            color="#f4d03f"
-          />
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-          <FontAwesome5
-            style={styles.footerIcon}
-            name="coins"
-            size={30}
-            color="#f99700"
-          />
-          <Text style={styles.footerText}>0</Text>
-        </View>
-      </View>
-    );
-  };
+  //   console.log("getUserName,,,,..///////......", getUserName);
+  //   console.log("getUserImage....|||||||||||||...", getUserImage);
+  //   return (
+  //     <View>
+  //       <View style={styles.userDetail}>
+  //         <TouchableOpacity
+  //           onPress={openUserDetailModal}
+  //           style={[
+  //             styles.userStyle,
+  //             {
+  //               width: wp(30),
+  //               alignItems: "flex-end",
+  //               justifyContent: "flex-end",
+  //               marginHorizontal: wp(2),
+  //             },
+  //           ]}
+  //         >
+  //           <Image
+  //             style={{ width: 50, height: 50, borderRadius: 25 }}
+  //             source={
+  //               getUserImage
+  //                 ? getUserImage
+  //                 : require("../assets/headerImages/user3.png")
+  //             }
+  //           />
+  //         </TouchableOpacity>
+  //         <View style={{ width: wp(40) }}>
+  //           <Text style={[styles.userName, { fontSize: 20 }]}>
+  //             {getUserName ? getUserName : "USER"}
+  //           </Text>
+  //         </View>
+  //         <TouchableOpacity
+  //           onPress={openUserDetailModal}
+  //           style={{
+  //             width: wp(10),
+  //             alignItems: "center",
+  //             justifyContent: "center",
+  //           }}
+  //         >
+  //           <Octicons
+  //             style={styles.pencilStyle}
+  //             name="pencil"
+  //             size={30}
+  //             color="#000"
+  //           />
+  //         </TouchableOpacity>
+  //       </View>
+  //       <View style={{ flexDirection: "row", alignItems: "center" }}>
+  //         <Bar
+  //           progress={1}
+  //           width={wp(45)}
+  //           height={hp(5)}
+  //           color="#d3d3d2"
+  //           borderRadius={10}
+  //           style={{ marginVertical: 10 }}
+  //         />
+  //         <Image
+  //           style={styles.applogoStyle}
+  //           source={require("../assets/headerImages/applogo1.jpg")}
+  //         />
+  //         <Text style={styles.barText}>0%</Text>
+  //       </View>
+  //       <View style={{ flexDirection: "row", alignItems: "center" }}>
+  //         <Bar
+  //           progress={1}
+  //           width={wp(40)}
+  //           height={hp(5)}
+  //           color="#f5d742"
+  //           borderRadius={10}
+  //           style={{ marginVertical: 10 }}
+  //         />
+  //         <AntDesign
+  //           style={styles.ratingIcon}
+  //           name="star"
+  //           size={40}
+  //           color="#f99700"
+  //         />
+  //         <Text style={styles.barText}>0/108</Text>
+  //       </View>
+  //       <View
+  //         style={{
+  //           flexDirection: "row",
+  //           alignItems: "center",
+  //           marginBottom: hp(3),
+  //         }}
+  //       >
+  //         <Bar
+  //           progress={1}
+  //           width={wp(40)}
+  //           height={hp(5)}
+  //           color="#f5a4ea"
+  //           borderRadius={10}
+  //           style={{ marginVertical: 10 }}
+  //         />
+  //         <Ionicons
+  //           style={styles.ratingIcon}
+  //           name="diamond-outline"
+  //           size={40}
+  //           color="#f154a5"
+  //         />
+  //         <Text style={styles.barText}>0/36</Text>
+  //       </View>
+  //       <View style={styles.prize}>
+  //         <Text style={styles.level1Text}>LEVEL 1</Text>
+  //         <MaterialCommunityIcons
+  //           style={styles.ratingIcon}
+  //           name="trophy"
+  //           size={70}
+  //           color="#fcc48f"
+  //         />
+  //         <Ionicons
+  //           style={styles.ratingIcon}
+  //           name="diamond-outline"
+  //           size={70}
+  //           color="#fcc48f"
+  //         />
+  //       </View>
+  //       <View style={styles.prize}>
+  //         <Text style={styles.level2Text}>LEVEL 2</Text>
+  //         <MaterialCommunityIcons
+  //           style={styles.ratingIcon}
+  //           name="trophy"
+  //           size={70}
+  //           color="#aaaaaa"
+  //         />
+  //         <Ionicons
+  //           style={styles.ratingIcon}
+  //           name="diamond-outline"
+  //           size={70}
+  //           color="#aaaaaa"
+  //         />
+  //       </View>
+  //       <View style={styles.prize}>
+  //         <Text style={styles.level3Text}>LEVEL 3</Text>
+  //         <MaterialCommunityIcons
+  //           style={styles.ratingIcon}
+  //           name="trophy"
+  //           size={70}
+  //           color="#f4d03f"
+  //         />
+  //         <Ionicons
+  //           style={styles.ratingIcon}
+  //           name="diamond-outline"
+  //           size={70}
+  //           color="#f4d03f"
+  //         />
+  //       </View>
+  //       <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+  //         <FontAwesome5
+  //           style={styles.footerIcon}
+  //           name="coins"
+  //           size={30}
+  //           color="#f99700"
+  //         />
+  //         <Text style={styles.footerText}>0</Text>
+  //       </View>
+  //     </View>
+  //   );
+  // };
 
   const getUserName = useSelector((state) => state.root.user.name);
   const getUserImage = useSelector((state) => state.root.user.image);
@@ -375,17 +367,17 @@ export const HomeHeader = ({ navigation }) => {
           />
         </TouchableOpacity>
         <View>
-          <Text style={{ color: "#fff" }}>
+          <Text style={{ color: "#fff", fontSize: 20 }}>
             {getUserName ? getUserName : "USER"}
           </Text>
-          <View style={{ flexDirection: "row" }}>
+          {/* <View style={{ flexDirection: "row" }}>
             <AntDesign
               style={styles.iconStyle}
               name="star"
               size={30}
               color="#f99700"
             />
-            <Text style={{ color: "#fff", marginRight: 10 }}>0</Text>
+            <Text style={{ color: "#fff", marginRight: 10 }}>{starLength}</Text>
             <Ionicons
               style={styles.iconStyle}
               name="diamond-outline"
@@ -393,27 +385,35 @@ export const HomeHeader = ({ navigation }) => {
               color="#f154a5"
             />
             <Text style={{ color: "#fff" }}>0</Text>
-          </View>
+          </View> */}
         </View>
       </View>
 
-      <View>
+      {/* <View>
         <FontAwesome5 name="coins" size={30} color="#f99700" />
         <Text style={{ color: "#fff", textAlign: "center" }}>0</Text>
-      </View>
+      </View> */}
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={closeModal}
+        // onRequestClose={closeModal}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
               <AntDesign name="close" size={30} color="black" />
             </TouchableOpacity>
-
-            {userDetailModalVisible ? (
+            <ProfileImages
+              onOKPress={(image) => {
+                setSelectedImage(image); // Set selected image to state
+                setUserDetailModalVisible(false);
+              }}
+            />
+            {/* {userDetailModalVisible ? (
               <ProfileImages
                 onOKPress={(image) => {
                   setSelectedImage(image); // Set selected image to state
@@ -422,7 +422,7 @@ export const HomeHeader = ({ navigation }) => {
               />
             ) : (
               <UserDetailComponent />
-            )}
+            )} */}
           </View>
         </View>
       </Modal>
@@ -456,6 +456,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
   },
   user: {
+    width: wp(65),
     flexDirection: "row",
     alignItems: "center",
   },

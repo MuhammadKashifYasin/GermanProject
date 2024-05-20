@@ -16,9 +16,10 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { HomeHeader } from "../components/homeHeader";
 import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
+import { setStar } from "../redux/reducers/userReducer";
 
 const Dashboared = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +33,7 @@ const Dashboared = ({ navigation }) => {
   const [completedMemoryData, setCompletedMemoryData] = useState([]);
   const [completedWritingData, setCompletedWritingData] = useState([]);
   const [currentComponent, setCurrentComponent] = useState(null);
+  const [starRatingLength, setStarRatingLength] = useState([]);
 
   const ArrayImages = [
     {
@@ -45,7 +47,7 @@ const Dashboared = ({ navigation }) => {
       screenName: "number",
     },
     {
-      image: require("../assets/images/color.jpg"),
+      image: require("../assets/images/color.jpeg"),
       name: "FARBEN",
       screenName: "color",
     },
@@ -80,7 +82,7 @@ const Dashboared = ({ navigation }) => {
       screenName: "verbs",
     },
     {
-      image: require("../assets/images/body.jpeg"),
+      image: require("../assets/images/body.png"),
       name: "KÖRPER",
       screenName: "body",
     },
@@ -120,7 +122,7 @@ const Dashboared = ({ navigation }) => {
       screenName: "month",
     },
     {
-      image: require("../assets/images/shirt.jpeg"),
+      image: require("../assets/images/shirt.png"),
       name: "KLEIDUNG",
       screenName: "clothing",
     },
@@ -170,7 +172,7 @@ const Dashboared = ({ navigation }) => {
       screenName: "holiday",
     },
     {
-      image: require("../assets/images/sport.jpeg"),
+      image: require("../assets/images/sport.jpg"),
       name: "SPORT",
       screenName: "sport",
     },
@@ -289,7 +291,7 @@ const Dashboared = ({ navigation }) => {
   //   );
 
   // const starColor = isAnyCompleted ? "#ffbd01" : "#ccc";
-
+  const dispatch = useDispatch();
   const calculateStarRating = (screenName) => {
     let totalCompletedCount = 0;
 
@@ -317,10 +319,18 @@ const Dashboared = ({ navigation }) => {
       memoryCompletedCount +
       writingCompletedCount;
 
+    // useEffect(() => {
+    //   dispatch(setStar(totalCompletedCount / 3));
+    // }, [totalCompletedCount]);
+
     // Divide by 3 to represent the stars
     return totalCompletedCount / 3;
   };
 
+  // useEffect(() => {
+  //   dispatch(setStar(totalCompletedCount));
+  //   console.log("totalCompletedCount", totalCompletedCount );
+  // }, []);
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <HomeHeader navigation={undefined} />
@@ -621,8 +631,8 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   image: {
-    width: 80,
-    height: 60,
+    width: 90,
+    height: 57,
     borderRadius: 5,
     marginBottom: 10,
   },
