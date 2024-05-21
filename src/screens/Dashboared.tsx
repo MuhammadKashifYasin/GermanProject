@@ -333,7 +333,7 @@ const Dashboared = ({ navigation }) => {
   // }, []);
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <HomeHeader navigation={undefined} />
+      <HomeHeader navigation={() => navigation.goBack()} />
       {/* <ScrollView>
         <View style={styles.container}>
           {ArrayImages.map((item, index) => {
