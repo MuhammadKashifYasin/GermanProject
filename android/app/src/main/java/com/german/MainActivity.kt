@@ -1,4 +1,4 @@
-package com.german
+package com.developerzLoop.german
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

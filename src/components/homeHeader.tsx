@@ -6,7 +6,7 @@ import {
   Image,
   StyleSheet,
   Modal,
-  TextInput, 
+  TextInput,
   FlatList,
 } from "react-native";
 import {
@@ -21,6 +21,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Bar } from "react-native-progress";
 import { setImage, setName, setStar } from "../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
+const dummyImage = require("../assets/headerImages/image1.jpeg");
 
 export const HomeHeader = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -99,6 +100,8 @@ export const HomeHeader = ({ navigation }) => {
     const [text, setText] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
 
+    console.log("selectedImage", selectedImage);
+
     const handleSubmit = () => {
       dispatch(setName(text)); // Dispatch user input name
       dispatch(setImage(selectedImage)); // Dispatch selected image
@@ -121,9 +124,9 @@ export const HomeHeader = ({ navigation }) => {
             <Image
               style={{ width: 50, height: 50, borderRadius: 25 }}
               source={
-                getUserImage
+                selectedImage || getUserImage
                   ? selectedImage || getUserImage
-                  : require("../assets/headerImages/user3.png")
+                  : require("../assets/headerImages/user.png")
               }
             />
           </View>
@@ -342,9 +345,7 @@ export const HomeHeader = ({ navigation }) => {
 
   const getUserName = useSelector((state) => state.root.user.name);
   const getUserImage = useSelector((state) => state.root.user.image);
-
-  console.log("getUserName,,,,..///////......", getUserName);
-  console.log("getUserImage....|||||||||||||...", getUserImage);
+  console.log("getUserImage", getUserImage);
 
   return (
     <View style={styles.container}>
@@ -355,14 +356,17 @@ export const HomeHeader = ({ navigation }) => {
       <View style={styles.user}>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
-          style={{ alignItems: "center", marginRight: wp(3) }}
+          style={{
+            alignItems: "center",
+            marginRight: wp(3),
+          }}
         >
           <Image
             style={{ width: 50, height: 50, borderRadius: 25 }}
             source={
               getUserImage
                 ? getUserImage
-                : require("../assets/headerImages/user3.png")
+                : require("../assets/headerImages/user.png")
             }
           />
         </TouchableOpacity>
